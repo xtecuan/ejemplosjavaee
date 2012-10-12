@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Consume Hola Mundo Facade EJB</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form1">
+
+            <h:outputFormat id="salida" value="#{holaMundoManagedBean.saludo}"
+
+                            rendered="#{not empty holaMundoManagedBean.saludo}"/>
+
+            <h:panelGrid columns="2">
+
+                <h:outputLabel value="Ingrese el nombre del usuario"/>
+
+                <p:inputText value="#{holaMundoManagedBean.nombreUsuario}" id="nombreUsuario"/>
+
+                <f:facet name="footer">
+
+                    <h:commandButton value="Saludar" id="saludar" 
+                         actionListener="#{holaMundoManagedBean.saludar(event)}" update="salida"/>
+
+                </f:facet>
+
+
+            </h:panelGrid>
+
+        </h:form>
+
+
+    </h:body>
+</html>
+
