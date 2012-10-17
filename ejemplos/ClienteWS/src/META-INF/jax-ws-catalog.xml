@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://blitz5.local:8080/HolaMundoBeanService/HolaMundoBean?WSDL" uri="wsdl/blitz5.local_8080/HolaMundoBeanService/HolaMundoBean.wsdl"/>
     <system systemId="http://blitz5.local:8080/HolaMundoBeanService/HolaMundoBean?xsd=1" uri="wsdl/blitz5.local_8080/HolaMundoBeanService/HolaMundoBean.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/HolaMundoBeanService/HolaMundoBean?WSDL" uri="wsdl/localhost_8080/HolaMundoBeanService/HolaMundoBean.wsdl"/>
+    <system systemId="http://localhost:8080/HolaMundoBeanService/HolaMundoBean?xsd=1" uri="wsdl/localhost_8080/HolaMundoBeanService/HolaMundoBean.xsd_1.xsd"/>
 </catalog>
