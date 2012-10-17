@@ -20,8 +20,8 @@
     </target>
     <target name="wsimport-client-HolaMundoBean" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/HolaMundoBean"/>
-        <property name="wsdl-HolaMundoBean" location="xml-resources/web-service-references/HolaMundoBean/wsdl/blitz5.local_8080/HolaMundoBeanService/HolaMundoBean.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/HolaMundoBean" destdir="${build.generated.dir}/jax-wsCache/HolaMundoBean" wsdl="${wsdl-HolaMundoBean}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://blitz5.local:8080/HolaMundoBeanService/HolaMundoBean?WSDL" xendorsed="true">
+        <property name="wsdl-HolaMundoBean" location="xml-resources/web-service-references/HolaMundoBean/wsdl/localhost_8080/HolaMundoBeanService/HolaMundoBean.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/HolaMundoBean" destdir="${build.generated.dir}/jax-wsCache/HolaMundoBean" wsdl="${wsdl-HolaMundoBean}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/HolaMundoBeanService/HolaMundoBean?WSDL" xendorsed="true">
             <depends file="${wsdl-HolaMundoBean}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/HolaMundoBean"/>
         </wsimport>
