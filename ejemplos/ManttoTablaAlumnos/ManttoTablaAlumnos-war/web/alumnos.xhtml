@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Mantto. Alumnos</title>
+    </h:head>
+    <h:body>
+        <h1><h:outputFormat value="Mantto de Alumnos"/></h1>
+
+        <h:messages id="mensajes" showDetail="true"/>
+        <h:form id="form1">
+
+            <h:panelGrid columns="2">
+
+
+                <h:outputLabel value="Carnet" for="carnet"/>
+                <h:inputText id="carnet" value="#{alumnosBean.alumno.carnet}" required="true" requiredMessage="El carnet es requerido"/>
+
+                <h:outputLabel value="Nombres" for="nombres"/>
+                <h:inputText id="nombres" value="#{alumnosBean.alumno.nombres}" required="true" requiredMessage="Los nombres son requeridos"/>
+
+                <h:outputLabel value="Apellidos" for="apellidos"/>
+                <h:inputText id="apellidos" value="#{alumnosBean.alumno.apellidos}" required="true" requiredMessage="Los apellidos son requeridos"/>
+
+                <h:outputLabel value="Correo" for="correo"/>
+                <h:inputText id="correo" value="#{alumnosBean.alumno.correo}" />
+
+                <h:outputLabel value="Seleccione la fecha de Nacimiento:" for="fechanac"/>
+                <h:panelGrid columns="3" id="fechanac">
+
+                    <h:selectOneMenu id="dia" value="#{alumnosBean.dia}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione dia"/>
+                        <f:selectItems  value="#{alumnosBean.itemsDias}"/>
+
+                    </h:selectOneMenu>
+                    
+                    <h:selectOneMenu id="mes" value="#{alumnosBean.mes}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione mes"/>
+                        <f:selectItems value="#{alumnosBean.itemsMeses}"/>
+
+                    </h:selectOneMenu>
+                    
+                    <h:selectOneMenu id="annio" value="#{alumnosBean.annio}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione annio"/>
+                        <f:selectItems value="#{alumnosBean.itemsAnnios}"/>
+
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    
+                    <h:commandButton value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
+                    
+                    
+                </f:facet>
+
+            </h:panelGrid>
+
+        </h:form>
+
+    </h:body>
+</html>
+
