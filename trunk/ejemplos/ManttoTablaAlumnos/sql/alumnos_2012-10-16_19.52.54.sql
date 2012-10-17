@@ -36,6 +36,8 @@ CREATE TABLE  `alumnos`.`alumnos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
+grant all on alumnos.* to 'alumnos'@'localhost' identified by 'welcome1';
+
 --
 -- Dumping data for table `alumnos`.`alumnos`
 --
