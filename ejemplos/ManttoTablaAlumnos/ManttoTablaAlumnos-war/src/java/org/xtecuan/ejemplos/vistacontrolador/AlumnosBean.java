@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.apache.log4j.Logger;
 import org.xtecuan.ejemplos.modelo.dto.AlumnosDTO;
@@ -38,30 +39,32 @@ public class AlumnosBean implements Serializable {
     private Integer dia;
     private Integer mes;
     private Integer annio;
+    private ListDataModel<AlumnosDTO> model = new ListDataModel<AlumnosDTO>();
 
     /**
      * Creates a new instance of AlumnosBean
      */
     public AlumnosBean() {
-        init();
+        //init();
     }
 
-    //@PostConstruct
+    @PostConstruct
     private void init() {
         popularDias();
         popularMeses();
         popularAnnios();
+        popularTableModel();
     }
 
     private void popularDias() {
 
 //        if (itemsDias.size()==0) {
 
-            for (int i = 1; i <= 31; i++) {
+        for (int i = 1; i <= 31; i++) {
 
-                itemsDias.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
+            itemsDias.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
 
-            }
+        }
 //        }
     }
 
@@ -69,11 +72,11 @@ public class AlumnosBean implements Serializable {
 
 //        if (itemsMeses.isEmpty()) {
 
-            for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 12; i++) {
 
-                itemsMeses.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
+            itemsMeses.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
 
-            }
+        }
 //        }
     }
 
@@ -85,11 +88,22 @@ public class AlumnosBean implements Serializable {
 
 //        if (itemsAnnios.isEmpty()) {
 
-            for (int i = 1900; i <= Integer.valueOf(annio).intValue(); i++) {
-                itemsAnnios.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
+        for (int i = 1900; i <= Integer.valueOf(annio).intValue(); i++) {
+            itemsAnnios.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
 
-            }
+        }
 //        }
+    }
+
+    private void popularTableModel() {
+        try {
+            List<AlumnosDTO> dtos = alumnosFacade.encontrarTodosLosAlumnos();
+
+            this.model = new ListDataModel<AlumnosDTO>(dtos);
+
+        } catch (Exception e) {
+            logger.error("Error al llenar el modelo de alumnos: ", e);
+        }
     }
 
     public AlumnosDTO getAlumno() {
@@ -109,6 +123,28 @@ public class AlumnosBean implements Serializable {
         AlumnosDTO salida = null;
 
         if (alumno != null) {
+
+            if (dia.intValue() > 0 && mes.intValue() > 0 && annio.intValue() > 0) {
+
+                String fechaStr = dia.intValue() + "-" + mes.intValue() + "-" + annio.intValue();
+
+                Date fechaObj = null;
+
+                try {
+
+                    fechaObj = sdfFecha.parse(fechaStr);
+
+                    if (fechaObj != null) {
+                        alumno.setFechanac(fechaObj);
+                    }
+
+                } catch (Exception e) {
+
+                    logger.error("Error al parsear la fecha desde los combos!!!", e);
+                }
+
+            }
+
             try {
                 salida = alumnosFacade.guardarAlumnos(alumno);
 
@@ -184,6 +220,12 @@ public class AlumnosBean implements Serializable {
     public void setAnnio(Integer annio) {
         this.annio = annio;
     }
-    
-    
+
+    public ListDataModel<AlumnosDTO> getModel() {
+        return model;
+    }
+
+    public void setModel(ListDataModel<AlumnosDTO> model) {
+        this.model = model;
+    }
 }

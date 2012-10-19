@@ -36,14 +36,14 @@
                         <f:selectItems  value="#{alumnosBean.itemsDias}"/>
 
                     </h:selectOneMenu>
-                    
+
                     <h:selectOneMenu id="mes" value="#{alumnosBean.mes}">
 
                         <f:selectItem itemValue="0" itemLabel="Seleccione mes"/>
                         <f:selectItems value="#{alumnosBean.itemsMeses}"/>
 
                     </h:selectOneMenu>
-                    
+
                     <h:selectOneMenu id="annio" value="#{alumnosBean.annio}">
 
                         <f:selectItem itemValue="0" itemLabel="Seleccione annio"/>
@@ -54,13 +54,61 @@
                 </h:panelGrid>
 
                 <f:facet name="footer">
-                    
+
                     <h:commandButton value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
-                    
-                    
+
+
                 </f:facet>
 
             </h:panelGrid>
+
+
+            <h:dataTable value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" style="border:solid 1px">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="id"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.id}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="carnet"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.carnet}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.nombres}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="apellidos"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.apellidos}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="correo"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.correo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="fechanac"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.fechanac}" >
+                        <f:convertDateTime timeZone="#{initParam.timezone}"  pattern="dd/MMM/yyyy"/>                                
+                    </h:outputText>
+                </h:column>
+            </h:dataTable>
+
 
         </h:form>
 
