@@ -97,7 +97,7 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
                     marcas.append("?");
                     params.add(alumno.getFechanac());
                 }
-                
+
                 String insert = AlumnosDTO.getInsert(nombres, marcas);
 
                 psta = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
@@ -183,7 +183,7 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
 
         AlumnosDTO alumno = null;
         boolean correoBool = correo != null && correo.length() > 0;
-        boolean fechacBool = fechanac != null & fechanac.length()>=10;
+        boolean fechacBool = fechanac != null & fechanac.length() >= 10;
         boolean carnetBool = carnet != null && carnet.length() >= 10;
         boolean nombresBool = nombres != null && nombres.length() > 0;
         boolean apellidosBool = apellidos != null && apellidos.length() > 0;
@@ -220,5 +220,109 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
         }
 
         return alumno;
+    }
+
+    @Override
+    public java.util.List<AlumnosDTO> encontrarTodosLosAlumnos() throws ManttoTablaAlumnosException {
+
+        List<AlumnosDTO> dtos = new ArrayList<AlumnosDTO>(0);
+        Connection conn = null;
+        Statement sta = null;
+        ResultSet rset = null;
+        try {
+
+            conn = obtenerConexion();
+            sta = conn.createStatement();
+            rset = sta.executeQuery(AlumnosDTO.getSELECT_ALL());
+            while (rset.next()) {
+
+                AlumnosDTO dto = new AlumnosDTO();
+                dto.setId(rset.getInt("id"));
+                dto.setCarnet(rset.getString("carnet"));
+                dto.setNombres(rset.getString("nombres"));
+                dto.setApellidos(rset.getString("apellidos"));
+
+                String correo = rset.getString("correo");
+
+                if (correo != null && correo.length() > 0) {
+                    dto.setCorreo(correo);
+                }
+
+                java.sql.Date fechanac = rset.getDate("fechanac");
+
+                if (fechanac != null) {
+                    dto.setFechanac(new java.util.Date(fechanac.getTime()));
+                }
+
+                dtos.add(dto);
+
+            }
+
+            rset.close();
+            sta.close();
+
+
+
+        } catch (Exception e) {
+
+            logger.error("Error al obtener el listado de todos los alumnos: ", e);
+            throw new ManttoTablaAlumnosException(e.getMessage());
+        } finally {
+
+            try {
+                if (conn != null) {
+
+                    conn.close();
+                }
+            } catch (Exception e) {
+                logger.error("Error al cerrar la conexion hacia la base de datos", e);
+            }
+
+        }
+
+        return dtos;
+    }
+
+    @Override
+    public Integer contarAlumnos() throws ManttoTablaAlumnosException {
+        int counter = 0;
+
+        Connection conn = null;
+        Statement sta = null;
+        ResultSet rset = null;
+        try {
+
+            conn = obtenerConexion();
+            sta = conn.createStatement();
+            rset = sta.executeQuery(AlumnosDTO.getSELECT_ALL_COUNT());
+            while (rset.next()) {
+                
+                counter = rset.getInt(1);
+            }
+
+            rset.close();
+            sta.close();
+
+
+
+        } catch (Exception e) {
+
+            logger.error("Error al obtener el listado de todos los alumnos: ", e);
+            throw new ManttoTablaAlumnosException(e.getMessage());
+        } finally {
+
+            try {
+                if (conn != null) {
+
+                    conn.close();
+                }
+            } catch (Exception e) {
+                logger.error("Error al cerrar la conexion hacia la base de datos", e);
+            }
+
+        }
+
+
+        return counter;
     }
 }

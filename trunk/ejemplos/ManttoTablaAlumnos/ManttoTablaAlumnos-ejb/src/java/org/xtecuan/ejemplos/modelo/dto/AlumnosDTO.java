@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class AlumnosDTO implements Serializable {
 
+    private static final String SELECT_ALL_COUNT = "select count(*) from alumnos ";
+    private static final String SELECT_ALL = "select * from alumnos ";
     private static final String INSERT = "insert into alumnos(carnet,nombres,apellidos,${0}) "
             + "values(?,?,?,${1})";
     private Integer id;
@@ -112,4 +114,15 @@ public class AlumnosDTO implements Serializable {
         }
 
     }
+
+    public static String getSELECT_ALL() {
+        return SELECT_ALL;
+    }
+
+    public static String getSELECT_ALL_COUNT() {
+        return SELECT_ALL_COUNT;
+    }
+    
+    
+    
 }

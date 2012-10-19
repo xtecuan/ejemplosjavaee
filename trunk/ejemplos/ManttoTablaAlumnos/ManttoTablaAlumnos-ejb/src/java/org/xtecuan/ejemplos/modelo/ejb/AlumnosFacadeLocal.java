@@ -18,4 +18,8 @@ public interface AlumnosFacadeLocal {
     AlumnosDTO guardarAlumnos(AlumnosDTO alumno) throws ManttoTablaAlumnosException;
 
     AlumnosDTO guardarAlumnosTest(String carnet, String nombres, String apellidos, String correo, String fechanac) throws ManttoTablaAlumnosException;
+
+    java.util.List<AlumnosDTO> encontrarTodosLosAlumnos() throws ManttoTablaAlumnosException;
+
+    Integer contarAlumnos() throws ManttoTablaAlumnosException;
 }
