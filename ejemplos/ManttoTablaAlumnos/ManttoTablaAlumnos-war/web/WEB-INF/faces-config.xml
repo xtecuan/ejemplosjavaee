@@ -12,15 +12,4 @@
         <managed-bean-class>org.xtecuan.ejemplos.vistacontrolador.AlumnosBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <navigation-rule>
-        <from-view-id>/alumnos.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>irDondeLaTencha</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>irDondeTioPeriquito</from-outcome>
-            <to-view-id>/index.jsp</to-view-id>
-        </navigation-case>
-    </navigation-rule>
 </faces-config>
