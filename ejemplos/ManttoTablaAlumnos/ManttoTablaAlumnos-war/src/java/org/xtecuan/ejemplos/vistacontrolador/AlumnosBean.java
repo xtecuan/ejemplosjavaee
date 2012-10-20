@@ -5,10 +5,12 @@
 package org.xtecuan.ejemplos.vistacontrolador;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -36,6 +38,8 @@ public class AlumnosBean implements Serializable {
     private List<SelectItem> itemsAnnios = new ArrayList<SelectItem>(0);
     private static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
     private static SimpleDateFormat sdfFecha = new SimpleDateFormat("dd-MM-yyyy");
+    private static SimpleDateFormat sdfMonth = new SimpleDateFormat("MM");
+    private final SimpleDateFormat sdfMonthSpanish = new SimpleDateFormat("MMMMM", new Locale("es", "SV"));
     private Integer dia;
     private Integer mes;
     private Integer annio;
@@ -45,54 +49,47 @@ public class AlumnosBean implements Serializable {
      * Creates a new instance of AlumnosBean
      */
     public AlumnosBean() {
-        //init();
     }
 
     @PostConstruct
     private void init() {
+        initViewVariables();
         popularDias();
         popularMeses();
         popularAnnios();
         popularTableModel();
     }
 
+    private void initViewVariables() {
+        alumno = new AlumnosDTO();
+        dia = 0;
+        mes = 0;
+        annio = 0;
+    }
+
     private void popularDias() {
-
-//        if (itemsDias.size()==0) {
-
         for (int i = 1; i <= 31; i++) {
-
             itemsDias.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
-
         }
-//        }
     }
 
     private void popularMeses() {
-
-//        if (itemsMeses.isEmpty()) {
-
         for (int i = 1; i <= 12; i++) {
-
-            itemsMeses.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
-
+            try {
+                Date d = sdfMonth.parse(String.valueOf(i));
+                itemsMeses.add(new SelectItem(Integer.valueOf(i), sdfMonthSpanish.format(d).toUpperCase()));
+            } catch (ParseException ex) {
+                logger.error("Error al parsear los meses: mes: " + i, ex);
+            }
         }
-//        }
     }
 
     private void popularAnnios() {
-
         Date fa = new Date();
-
-        String annio = sdfYear.format(fa);
-
-//        if (itemsAnnios.isEmpty()) {
-
-        for (int i = 1900; i <= Integer.valueOf(annio).intValue(); i++) {
+        String annio1 = sdfYear.format(fa);
+        for (int i = 1900; i <= Integer.valueOf(annio1).intValue(); i++) {
             itemsAnnios.add(new SelectItem(Integer.valueOf(i), Integer.valueOf(i).toString()));
-
         }
-//        }
     }
 
     private void popularTableModel() {
@@ -117,6 +114,12 @@ public class AlumnosBean implements Serializable {
 
     public void setAlumno(AlumnosDTO alumno) {
         this.alumno = alumno;
+    }
+
+    public String cancelar() {
+
+        initViewVariables();
+        return "alumnos?faces-redirect=true";
     }
 
     public void guardarInformacion(ActionEvent event) {

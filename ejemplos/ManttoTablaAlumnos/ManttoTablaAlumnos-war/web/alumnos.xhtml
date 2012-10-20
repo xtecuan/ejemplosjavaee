@@ -5,12 +5,16 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Mantto. Alumnos</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
         <h1><h:outputFormat value="Mantto de Alumnos"/></h1>
 
-        <h:messages id="mensajes" showDetail="true"/>
-        <h:form id="form1">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages id="mensajes" errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+
+        <h:form id="form1" styleClass="jsfcrud_list_form">
 
             <h:panelGrid columns="2">
 
@@ -55,15 +59,16 @@
 
                 <f:facet name="footer">
 
-                    <h:commandButton value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
-
-
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
+                        <h:commandButton value="Cancelar" action="#{alumnosBean.cancelar()}" />
+                    </h:panelGrid>
                 </f:facet>
 
             </h:panelGrid>
 
 
-            <h:dataTable value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" style="border:solid 1px">
+            <h:dataTable value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="id"/>
