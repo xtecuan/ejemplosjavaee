@@ -151,6 +151,7 @@ public class AlumnosBean implements Serializable {
                 if (salida != null) {
 
                     adicionarMensaje("Se ingreso un alumno con id: " + salida.getId());
+                    popularTableModel();
                 }
 
             } catch (ManttoTablaAlumnosException ex) {
