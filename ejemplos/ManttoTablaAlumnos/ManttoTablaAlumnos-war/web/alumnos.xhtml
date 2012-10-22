@@ -66,9 +66,9 @@
                 </f:facet>
 
             </h:panelGrid>
-
-
-            <h:dataTable value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+        </h:form>
+        <h:form id="form2" styleClass="jsfcrud_list_form">
+            <h:dataTable binding="#{alumnosBean.table}" value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="id"/>
@@ -111,6 +111,21 @@
                     <h:outputText value="#{alumno.fechanac}" >
                         <f:convertDateTime timeZone="#{initParam.timezone}"  pattern="dd/MMM/yyyy"/>                                
                     </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Acciones"/>
+                    </f:facet>
+
+                    <h:panelGrid columns="2">
+
+                        <h:commandLink id="editar" actionListener="#{alumnosBean.prepararEdicion(event)}" value="Editar"/>
+
+                        <h:commandLink id="borrar" actionListener="#{alumnosBean.borrarInformacion(event)}" value="Borrar" onclick="if(confirm('Desea borrar el alumno con id: #{alumno.id}')){return true;}else{return false;}"/>
+
+                    </h:panelGrid>
+
                 </h:column>
             </h:dataTable>
 

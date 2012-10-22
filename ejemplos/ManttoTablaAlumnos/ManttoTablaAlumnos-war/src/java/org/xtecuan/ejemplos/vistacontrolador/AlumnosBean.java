@@ -11,14 +11,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.apache.log4j.Logger;
+import org.xtecuan.ejemplos.modelo.constantes.Constantes;
 import org.xtecuan.ejemplos.modelo.dto.AlumnosDTO;
 import org.xtecuan.ejemplos.modelo.ejb.AlumnosFacadeLocal;
 import org.xtecuan.ejemplos.modelo.excepciones.ManttoTablaAlumnosException;
@@ -44,6 +47,7 @@ public class AlumnosBean implements Serializable {
     private Integer mes;
     private Integer annio;
     private ListDataModel<AlumnosDTO> model = new ListDataModel<AlumnosDTO>();
+    private HtmlDataTable table = new HtmlDataTable();
 
     /**
      * Creates a new instance of AlumnosBean
@@ -167,6 +171,32 @@ public class AlumnosBean implements Serializable {
 
     }
 
+    public void prepararEdicion(ActionEvent event) {
+
+        AlumnosDTO dto = (AlumnosDTO) table.getRowData();
+
+        logger.info("Se selecciono el alumno: " + dto + " para edicion");
+
+    }
+
+    public void borrarInformacion(ActionEvent event) {
+
+        AlumnosDTO dto = (AlumnosDTO) table.getRowData();
+        try {
+            int r = alumnosFacade.borrarAlumno(dto);
+            if (r == Constantes.EXITO_AL_BORRAR) {
+                adicionarMensaje("Se borro el alumno con id: " + dto.getId());
+                popularTableModel();
+            }
+        } catch (ManttoTablaAlumnosException ex) {
+            logger.error("Error al borrar el alumno", ex);
+            adicionarError("Error al borrar el alumno!!!");
+        }
+
+        logger.info("Se selecciono el alumno: " + dto + " para borrar");
+
+    }
+
     private void adicionarMensaje(String mensaje) {
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(mensaje));
@@ -231,5 +261,13 @@ public class AlumnosBean implements Serializable {
 
     public void setModel(ListDataModel<AlumnosDTO> model) {
         this.model = model;
+    }
+
+    public HtmlDataTable getTable() {
+        return table;
+    }
+
+    public void setTable(HtmlDataTable table) {
+        this.table = table;
     }
 }
