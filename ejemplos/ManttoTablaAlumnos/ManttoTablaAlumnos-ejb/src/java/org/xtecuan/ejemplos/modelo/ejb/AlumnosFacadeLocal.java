@@ -22,4 +22,6 @@ public interface AlumnosFacadeLocal {
     java.util.List<AlumnosDTO> encontrarTodosLosAlumnos() throws ManttoTablaAlumnosException;
 
     Integer contarAlumnos() throws ManttoTablaAlumnosException;
+
+    int borrarAlumno(AlumnosDTO alumno) throws ManttoTablaAlumnosException;
 }

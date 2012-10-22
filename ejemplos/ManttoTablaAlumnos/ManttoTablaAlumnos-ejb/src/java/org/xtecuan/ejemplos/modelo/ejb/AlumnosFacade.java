@@ -14,10 +14,9 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
+import org.xtecuan.ejemplos.modelo.constantes.Constantes;
 import org.xtecuan.ejemplos.modelo.dto.AlumnosDTO;
 import org.xtecuan.ejemplos.modelo.excepciones.ManttoTablaAlumnosException;
 
@@ -296,7 +295,7 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
             sta = conn.createStatement();
             rset = sta.executeQuery(AlumnosDTO.getSELECT_ALL_COUNT());
             while (rset.next()) {
-                
+
                 counter = rset.getInt(1);
             }
 
@@ -324,5 +323,47 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
 
 
         return counter;
+    }
+
+    @Override
+    public int borrarAlumno(AlumnosDTO alumno) throws ManttoTablaAlumnosException {
+
+        int result = Constantes.FALLO_AL_BORRAR;
+        Connection conn = null;
+        PreparedStatement psta = null;
+
+        try {
+
+            conn = obtenerConexion();
+            psta = conn.prepareStatement(AlumnosDTO.getDELETE());
+            psta.setInt(1, alumno.getId().intValue());
+
+            int r = psta.executeUpdate();
+
+            if (r == 1) {
+
+                result = Constantes.EXITO_AL_BORRAR;
+            }
+
+            psta.close();
+
+
+        } catch (Exception e) {
+
+            throw new ManttoTablaAlumnosException("Error al borrar el alumno: " + e.getCause().getMessage());
+        } finally {
+
+            try {
+                if (conn != null) {
+
+                    conn.close();
+                }
+            } catch (Exception e) {
+                logger.error("Error al cerrar la conexion hacia la base de datos", e);
+            }
+
+        }
+
+        return result;
     }
 }
