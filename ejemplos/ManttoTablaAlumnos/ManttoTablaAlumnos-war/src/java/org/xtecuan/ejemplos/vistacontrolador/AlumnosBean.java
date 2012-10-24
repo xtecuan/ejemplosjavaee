@@ -48,6 +48,7 @@ public class AlumnosBean implements Serializable {
     private Integer annio;
     private ListDataModel<AlumnosDTO> model = new ListDataModel<AlumnosDTO>();
     private HtmlDataTable table = new HtmlDataTable();
+    private Boolean modoInsert = Boolean.TRUE;
 
     /**
      * Creates a new instance of AlumnosBean
@@ -126,6 +127,53 @@ public class AlumnosBean implements Serializable {
         return "alumnos?faces-redirect=true";
     }
 
+    public void actualizarInformacion(ActionEvent event) {
+        int salida = Constantes.FALLO_AL_ACTUALIZAR;
+
+        if (alumno != null) {
+
+            if (dia.intValue() > 0 && mes.intValue() > 0 && annio.intValue() > 0) {
+
+                String fechaStr = dia.intValue() + "-" + mes.intValue() + "-" + annio.intValue();
+
+                Date fechaObj = null;
+
+                try {
+
+                    fechaObj = sdfFecha.parse(fechaStr);
+
+                    if (fechaObj != null) {
+                        alumno.setFechanac(fechaObj);
+                    }
+
+                } catch (Exception e) {
+
+                    logger.error("Error al parsear la fecha desde los combos!!!", e);
+                }
+
+            }
+
+            try {
+                salida = alumnosFacade.actualizarAlumno(alumno);
+
+                if (salida == Constantes.EXITO_AL_ACTUALIZAR) {
+
+                    adicionarMensaje("Se actualizo un alumno con id: " + getAlumno().getId());
+                    setModoInsert(Boolean.TRUE);
+                    initViewVariables();
+                    popularTableModel();
+                }
+
+            } catch (ManttoTablaAlumnosException ex) {
+
+                logger.error("Error al actualizar el alumno!!!", ex);
+
+                adicionarError("Error al actualizar el alumno en la base de datos!!!");
+            }
+        }
+
+    }
+
     public void guardarInformacion(ActionEvent event) {
         AlumnosDTO salida = null;
 
@@ -158,6 +206,7 @@ public class AlumnosBean implements Serializable {
                 if (salida != null) {
 
                     adicionarMensaje("Se ingreso un alumno con id: " + salida.getId());
+                    initViewVariables();
                     popularTableModel();
                 }
 
@@ -174,6 +223,10 @@ public class AlumnosBean implements Serializable {
     public void prepararEdicion(ActionEvent event) {
 
         AlumnosDTO dto = (AlumnosDTO) table.getRowData();
+
+        setAlumno(dto);
+
+        setModoInsert(Boolean.FALSE);
 
         logger.info("Se selecciono el alumno: " + dto + " para edicion");
 
@@ -269,5 +322,13 @@ public class AlumnosBean implements Serializable {
 
     public void setTable(HtmlDataTable table) {
         this.table = table;
+    }
+
+    public Boolean getModoInsert() {
+        return modoInsert;
+    }
+
+    public void setModoInsert(Boolean modoInsert) {
+        this.modoInsert = modoInsert;
     }
 }
