@@ -366,4 +366,112 @@ public class AlumnosFacade implements AlumnosFacadeLocal {
 
         return result;
     }
+
+    @Override
+    public int actualizarAlumno(AlumnosDTO alumno) throws ManttoTablaAlumnosException {
+        int result = Constantes.FALLO_AL_ACTUALIZAR;
+        Connection conn = null;
+        PreparedStatement psta = null;
+
+        try {
+            StringBuilder nombres = new StringBuilder();
+            List<Object> params = new ArrayList<Object>(0);
+
+            boolean idBool = alumno.getId() != null && alumno.getId().intValue() > 0;
+            boolean correoBool = alumno.getCorreo() != null && alumno.getCorreo().length() > 0;
+            boolean fechacBool = alumno.getFechanac() != null;
+            boolean carnetBool = alumno.getCarnet() != null && alumno.getCarnet().length() >= 10;
+            boolean nombresBool = alumno.getNombres() != null && alumno.getNombres().length() > 0;
+            boolean apellidosBool = alumno.getApellidos() != null && alumno.getApellidos().length() > 0;
+
+
+            if (carnetBool && nombresBool && apellidosBool & idBool) {
+
+                params.add(alumno.getCarnet());
+                nombres.append("carnet=?,");
+                params.add(alumno.getNombres());
+                nombres.append("nombres=?,");
+                params.add(alumno.getApellidos());
+                nombres.append("apellidos=?");
+
+                conn = obtenerConexion();
+
+                if (alumno.getCorreo() != null && alumno.getCorreo().length() > 0) {
+
+                    nombres.append(",correo=?");
+
+                    params.add(alumno.getCorreo());
+                }
+                if (alumno.getFechanac() != null) {
+                    nombres.append(",fechanac=?");
+                    params.add(alumno.getFechanac());
+                }
+
+                params.add(alumno.getId());
+
+                String update = AlumnosDTO.getUpdate(nombres);
+                logger.info("Ejecutando el update: " + update);
+                psta = conn.prepareStatement(update);
+                int i = 1;
+                for (Object param : params) {
+
+                    if (param instanceof Integer) {
+
+                        psta.setInt(i, (Integer) param);
+                    }
+
+                    if (param instanceof String) {
+                        psta.setString(i, (String) param);
+                    }
+
+                    if (param instanceof java.util.Date) {
+                        Date fecha = (Date) param;
+                        psta.setDate(i, new java.sql.Date(fecha.getTime()));
+                    }
+
+                    if (param instanceof Long) {
+                        psta.setLong(i, (Long) param);
+                    }
+
+                    i++;
+                }
+
+                int r1 = psta.executeUpdate();
+
+                if (r1 == 1) {
+                    result = Constantes.EXITO_AL_ACTUALIZAR;
+                } else {
+
+                    throw new ManttoTablaAlumnosException("No se ingreso ningun registro debido a un problema de persistencia!!!");
+                }
+
+                psta.close();
+
+
+            } else {
+
+                throw new ManttoTablaAlumnosException("El carnet, los nomnbres y apellidos son obligatorios!!!");
+
+            }
+
+
+            //psta = conn.prepareStatement(null, i)
+        } catch (Exception e) {
+
+            logger.error("Error generado: ", e);
+            throw new ManttoTablaAlumnosException("Error al insertar un alumno hacia la base de datos");
+        } finally {
+
+            try {
+                if (conn != null) {
+
+                    conn.close();
+                }
+            } catch (Exception e) {
+                logger.error("Error al cerrar la conexion hacia la base de datos", e);
+            }
+
+        }
+        return result;
+    }
 }

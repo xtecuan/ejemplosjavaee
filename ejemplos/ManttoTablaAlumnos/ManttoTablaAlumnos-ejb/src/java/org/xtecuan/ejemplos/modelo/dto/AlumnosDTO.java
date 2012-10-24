@@ -17,7 +17,8 @@ public class AlumnosDTO implements Serializable {
     private static final String SELECT_ALL = "select * from alumnos ";
     private static final String INSERT = "insert into alumnos(carnet,nombres,apellidos,${0}) "
             + "values(?,?,?,${1})";
-    private static final String DELETE="delete from alumnos where id=?";
+    private static final String DELETE = "delete from alumnos where id=?";
+    private static final String UPDATE_BASE = "UPDATE alumnos SET ${0} WHERE id = ?";
     private Integer id;
     private String carnet;
     private String nombres;
@@ -116,6 +117,18 @@ public class AlumnosDTO implements Serializable {
 
     }
 
+    public static String getUpdate(StringBuilder colsAndMarks) {
+
+        if (colsAndMarks.length() == 0) {
+
+            return UPDATE_BASE;
+        } else {
+
+            return UPDATE_BASE.replace("${0}", colsAndMarks.toString());
+        }
+
+    }
+
     public static String getSELECT_ALL() {
         return SELECT_ALL;
     }
@@ -127,7 +140,4 @@ public class AlumnosDTO implements Serializable {
     public static String getDELETE() {
         return DELETE;
     }
-    
-    
-    
 }

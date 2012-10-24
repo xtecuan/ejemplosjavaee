@@ -24,4 +24,6 @@ public interface AlumnosFacadeLocal {
     Integer contarAlumnos() throws ManttoTablaAlumnosException;
 
     int borrarAlumno(AlumnosDTO alumno) throws ManttoTablaAlumnosException;
+
+    int actualizarAlumno(AlumnosDTO alumno) throws ManttoTablaAlumnosException;
 }
