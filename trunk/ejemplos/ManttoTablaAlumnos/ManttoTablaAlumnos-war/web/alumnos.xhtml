@@ -59,8 +59,9 @@
 
                 <f:facet name="footer">
 
-                    <h:panelGrid columns="2">
-                        <h:commandButton value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
+                    <h:panelGrid columns="3">
+                        <h:commandButton rendered="#{alumnosBean.modoInsert}" value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
+                        <h:commandButton rendered="#{not alumnosBean.modoInsert}" value="Actualizar" actionListener="#{alumnosBean.actualizarInformacion(event)}" />
                         <h:commandButton value="Cancelar" action="#{alumnosBean.cancelar()}" />
                     </h:panelGrid>
                 </f:facet>
