@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Pagina1</title>
+    </h:head>
+    <h:body>
+        <h1>Pagina1</h1>
+        <h:form id="form1">
+            <h:panelGroup>
+                <h:commandButton value="Navegar Pagina2 con Forward" action="pagina2"/>
+                <h:commandButton value="Navegar Pagina2 con redirect" action="pagina2?faces-redirect=true"/>
+                
+                <h:commandButton value="Navegar Pagina2 con redirect y metodo en managed bean" 
+                                 action="#{pruebaNavegacion.irPagina2()}"/>
+                
+                <h:commandButton value="Navegar Pagina2 con redirect y outcome para regla nav." 
+                                 action="ir2"/>
+
+                <h:commandButton value="rellamar" 
+                                 action="rellamar"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:body>
+</html>
+

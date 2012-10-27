@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <managed-bean>
+        <description>Controlador para pagina alumnos.xhtml y alumnos_form.xhtml</description>
+        <managed-bean-name>alumnosBean</managed-bean-name>
+        <managed-bean-class>sv.edu.ufg.vistacontrolador.AlumnosBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>pruebaNavegacion</managed-bean-name>
+        <managed-bean-class>sv.edu.ufg.vistacontrolador.PruebaNavegacion</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/pagina1.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ir2</from-outcome>
+            <to-view-id>/pagina2.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>rellamar</from-outcome>
+            <to-view-id>/pagina1.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pagina2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ir1</from-outcome>
+            <to-view-id>/pagina1.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
