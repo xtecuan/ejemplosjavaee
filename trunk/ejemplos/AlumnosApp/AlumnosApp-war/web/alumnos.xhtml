@@ -10,8 +10,14 @@
     <h:body>
         <h:form id="form1">
             
+            <p:growl id="mensajes" showDetail="true" sticky="false"/>
+            
             <!--Aqui va la tabla con primefaces-->
-            <p:dataTable id="tablaAlumnos" value="#{alumnosBean.modeloTabla}" var="alumno" paginator="true" rows="10">
+            <!---->
+            <p:dataTable  id="tablaAlumnos" selection="#{alumnosBean.selected}"  
+                          value="#{alumnosBean.modeloTabla}" var="alumno" paginator="true" rows="10" lazy="true">
+                
+                <p:column selectionMode="single"/>
                 <p:column style="width: 50px">
                     <f:facet name="header">
                         <h:outputFormat value="id"/>
@@ -24,6 +30,36 @@
                     </f:facet>
                     <h:outputText value="#{alumno.nombres}"/>
                 </p:column>
+                <p:column style="width: 150px">
+                    <f:facet name="header">
+                        <h:outputFormat value="nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.apellidos}"/>
+                </p:column>
+                
+                <!--<p:column style="width: 150px">
+                    <f:facet name="header">
+                        <h:outputFormat value="Acciones"/>
+                    </f:facet>
+                    <h:panelGrid columns="2">
+                        
+                        <h:commandLink id="editar" value="Editar" actionListener="# {alumnosBean.prepararEdicion(event)}"/>
+                        
+                        <h:commandLink id="borrar" value="Borrar" actionListener="# {alumnosBean.borrar(event)}"/>
+                        
+                    </h:panelGrid>
+                </p:column>-->
+                <f:facet name="footer">
+                    
+                    <h:panelGrid columns="3">
+                        
+                        <p:commandButton id="editarButton" value="Editar" actionListener="#{alumnosBean.prepararEdicion(event)}"/>
+                        
+                        <p:commandButton id="borrarButton" value="Borrar" actionListener="#{alumnosBean.borrar(event)}" update=":form1:mensajes,:form1:tablaAlumnos"/>
+                        
+                    </h:panelGrid>
+                    
+                </f:facet>
             </p:dataTable>
             
         </h:form>
