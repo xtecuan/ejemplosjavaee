@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+">
+
+    <!--Proveedores de mensajes-->
+    
+    <bean id="StringProveedor" class="sv.edu.ufg.vistacontrolador.app.proveedormsg.impl.StringProveedor" />
+    
+     <bean id="PropertiesProveedor" class="sv.edu.ufg.vistacontrolador.app.proveedormsg.impl.PropertiesProveedor" />
+    
+    <!--Proveedores de Rendereds-->
+    <bean id="RenderizadorCmd" class="sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorCmd">
+        <property name="mensajes" ref="StringProveedor" />
+    </bean>
+    
+    <bean id="RenderizadorGui" class="sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorGui">
+        
+        <constructor-arg ref="StringProveedor"/>
+        
+    </bean>
+    
+    <bean id="RenderizadorCmd1" class="sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorCmd">
+        <property name="mensajes" ref="PropertiesProveedor" />
+    </bean>
+    
+    
+    <bean id="RenderizadorGui1" class="sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorGui">
+        
+        <constructor-arg ref="PropertiesProveedor"/>
+        
+    </bean>
+    
+    
+    
+    
+    
+</beans>
