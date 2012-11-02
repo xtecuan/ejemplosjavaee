@@ -55,7 +55,8 @@
                         
                         <p:commandButton id="editarButton" value="Editar" actionListener="#{alumnosBean.prepararEdicion(event)}"/>
                         
-                        <p:commandButton id="borrarButton" value="Borrar" actionListener="#{alumnosBean.borrar(event)}" update=":form1:mensajes,:form1:tablaAlumnos"/>
+                        <p:commandButton id="borrarButton" value="Borrar" actionListener="#{alumnosBean.borrar(event)}" update=":form1:mensajes,:form1:tablaAlumnos"
+                                         onclick="if(confirm('Desea borrar el alumno Seleccionado?')){return true;}else{return false;}"/>
                         
                     </h:panelGrid>
                     

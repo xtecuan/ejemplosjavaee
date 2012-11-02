@@ -8,6 +8,15 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>redmond</param-value>
     </context-param>
+    <filter>
+        <description>CharacterEncodingFilter</description>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.primefaces.examples.filter.CharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

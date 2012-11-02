@@ -111,7 +111,6 @@ public class AlumnosBean implements Serializable {
 //    public void setTabla(DataTable tabla) {
 //        this.tabla = tabla;
 //    }
-
     public void prepararEdicion(ActionEvent event) {
 
 
@@ -136,7 +135,7 @@ public class AlumnosBean implements Serializable {
 
                 adicionarError("Hubo un error borrando el registro con id: " + selected.getId());
             }
-        }else{
+        } else {
             adicionarError("Seleccione un registro para borrar!!!");
         }
 
