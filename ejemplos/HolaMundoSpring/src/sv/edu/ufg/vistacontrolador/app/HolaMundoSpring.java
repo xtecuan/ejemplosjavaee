@@ -29,11 +29,11 @@ public class HolaMundoSpring {
 
         RenderizadorCmd cmd1 = (RenderizadorCmd) factory.getBean("RenderizadorCmd1");
 
-        cmd.mostrar();
+        cmd1.mostrar();
 
         RenderizadorGui gui1 = (RenderizadorGui) factory.getBean("RenderizadorGui1");
 
-        gui.mostrar();
+        gui1.mostrar();
 
 
 
