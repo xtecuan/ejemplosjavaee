@@ -35,7 +35,13 @@ public class HolaMundoSpring {
 
         gui1.mostrar();
 
+        RenderizadorGui gui2 = (RenderizadorGui) factory.getBean("RenderizadorGui2");
 
+        gui2.mostrar();
+
+        RenderizadorGui gui3 = (RenderizadorGui) factory.getBean("RenderizadorGui3");
+
+        gui3.mostrar();
 
     }
 }
