@@ -7,6 +7,7 @@ package sv.edu.ufg.vistacontrolador.app;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 import sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorCmd;
+import sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorGedit;
 import sv.edu.ufg.vistacontrolador.app.renderizadormsg.impl.RenderizadorGui;
 
 /**
@@ -42,6 +43,10 @@ public class HolaMundoSpring {
         RenderizadorGui gui3 = (RenderizadorGui) factory.getBean("RenderizadorGui3");
 
         gui3.mostrar();
+        
+        RenderizadorGedit gedit = (RenderizadorGedit)factory.getBean("RenderizadorGedit");
+        
+        gedit.mostrar();
 
     }
 }
