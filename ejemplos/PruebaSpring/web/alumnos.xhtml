@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Mantto. Alumnos</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h1><h:outputFormat value="Mantto de Alumnos"/></h1>
+
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages id="mensajes" errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+
+        <h:form id="form1" styleClass="jsfcrud_list_form">
+
+            <h:panelGrid columns="2">
+
+
+                <h:outputLabel value="Carnet" for="carnet"/>
+                <h:inputText id="carnet" value="#{alumnosBean.alumno.carnet}" required="true" requiredMessage="El carnet es requerido"/>
+
+                <h:outputLabel value="Nombres" for="nombres"/>
+                <h:inputText id="nombres" value="#{alumnosBean.alumno.nombres}" required="true" requiredMessage="Los nombres son requeridos"/>
+
+                <h:outputLabel value="Apellidos" for="apellidos"/>
+                <h:inputText id="apellidos" value="#{alumnosBean.alumno.apellidos}" required="true" requiredMessage="Los apellidos son requeridos"/>
+
+                <h:outputLabel value="Correo" for="correo"/>
+                <h:inputText id="correo" value="#{alumnosBean.alumno.correo}" />
+
+                <h:outputLabel value="Seleccione la fecha de Nacimiento:" for="fechanac"/>
+                <h:panelGrid columns="3" id="fechanac">
+
+                    <h:selectOneMenu id="dia" value="#{alumnosBean.dia}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione dia"/>
+                        <f:selectItems  value="#{alumnosBean.itemsDias}"/>
+
+                    </h:selectOneMenu>
+
+                    <h:selectOneMenu id="mes" value="#{alumnosBean.mes}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione mes"/>
+                        <f:selectItems value="#{alumnosBean.itemsMeses}"/>
+
+                    </h:selectOneMenu>
+
+                    <h:selectOneMenu id="annio" value="#{alumnosBean.annio}">
+
+                        <f:selectItem itemValue="0" itemLabel="Seleccione annio"/>
+                        <f:selectItems value="#{alumnosBean.itemsAnnios}"/>
+
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <f:facet name="footer">
+
+                    <h:panelGrid columns="3">
+                        <h:commandButton rendered="#{alumnosBean.modoInsert}" value="Guardar" actionListener="#{alumnosBean.guardarInformacion(event)}" />
+                        <h:commandButton rendered="#{not alumnosBean.modoInsert}" value="Actualizar" actionListener="#{alumnosBean.actualizarInformacion(event)}" />
+                        <h:commandButton value="Cancelar" action="#{alumnosBean.cancelar()}" />
+                    </h:panelGrid>
+                </f:facet>
+
+            </h:panelGrid>
+        </h:form>
+        <h:form id="form2" styleClass="jsfcrud_list_form">
+            <h:dataTable binding="#{alumnosBean.table}" value="#{alumnosBean.model}" var="alumno" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="id"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.id}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="carnet"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.carnet}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.nombres}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="apellidos"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.apellidos}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="correo"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.correo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="fechanac"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.fechanac}" >
+                        <f:convertDateTime timeZone="#{initParam.timezone}"  pattern="dd/MMM/yyyy"/>                                
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Acciones"/>
+                    </f:facet>
+
+                    <h:panelGrid columns="2">
+
+                        <h:commandLink id="editar" actionListener="#{alumnosBean.prepararEdicion(event)}" value="Editar"/>
+
+                        <h:commandLink id="borrar" actionListener="#{alumnosBean.borrarInformacion(event)}" value="Borrar" onclick="if(confirm('Desea borrar el alumno con id: #{alumno.id}')){return true;}else{return false;}"/>
+
+                    </h:panelGrid>
+
+                </h:column>
+            </h:dataTable>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+
