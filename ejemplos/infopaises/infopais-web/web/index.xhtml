@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Welcome Page</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="formTabla">
+
+            <h:panelGrid columns="2">
+
+                <p:panel id="panelEntrada" header="Departamentos" style="width: 600px">
+
+
+                    <p:dataTable selection="#{deptos.selected}" id="tablaDeptos" value="#{deptos.modelo}" rows="5" 
+                                 lazy="true" var="depto" paginator="true">
+
+                        <p:column selectionMode="single" style="width: 20px" />
+                        <p:column style="width: 30px">
+
+                            <f:facet name="header">
+                                <h:outputText value="idDepto"/>
+                            </f:facet>
+
+                            <h:outputText value="#{depto.idDepto}"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+                                <h:outputText value="abreviatura"/>
+                            </f:facet>
+
+                            <h:outputText value="#{depto.abreviatura}"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+                                <h:outputText value="nombreDepto"/>
+                            </f:facet>
+
+                            <h:outputText value="#{depto.nombreDepto}"/>
+
+                        </p:column>
+
+
+                        <f:facet name="footer">
+
+                            <p:commandButton id="buttonVer" value="Ver Municipios" actionListener="#{deptos.mostrarMunis(event)}" update=":formTabla:tablaMunis"/>
+
+                        </f:facet>
+
+                    </p:dataTable>
+
+
+                </p:panel>
+
+                <p:panel id="panelMunis" header="Municipios" style="width: 400px">
+
+
+                    <p:dataTable  id="tablaMunis" value="#{deptos.modeloMunis}" rows="5" 
+                                  lazy="true" var="muni" paginator="true">
+
+
+                        <p:column style="width: 30px">
+
+                            <f:facet name="header">
+                                <h:outputText value="idMuni"/>
+                            </f:facet>
+
+                            <h:outputText value="#{muni.idMuni}"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+                                <h:outputText value="nombreMuni"/>
+                            </f:facet>
+
+                            <h:outputText value="#{muni.nombreMuni}"/>
+
+                        </p:column>
+
+
+
+                    </p:dataTable>
+
+                </p:panel>
+            </h:panelGrid>
+            
+            
+            
+        </h:form>
+        <h:form id="form2">
+            <p:commandButton ajax="false" id="linkMunis" value="Ir Mantto. Municipios" action="/app/municipios"/>
+        </h:form>
+    </h:body>
+</html>
+
