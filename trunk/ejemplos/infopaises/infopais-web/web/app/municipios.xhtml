@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Mantto. de municipios</title>
+    </h:head>
+    <h:body>
+        <h:form id="form1">
+
+            <p:growl id="growl" showDetail="true" sticky="false"/>
+
+            <p:panel id="panel1" header="Ingreso de Municipios" style="width: 400px">
+
+
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel value="Nombre:" for="nombre"/>
+
+                    <h:inputText id="nombre" value="#{munisBean.current.nombreMuni}" required="true" requiredMessage="Ingrese el nombre"/>
+
+                    <h:outputLabel value="Cabecera" for="cabecera"/>
+
+                    <h:selectOneMenu id="cabecera" value="#{munisBean.current.cabecera}" required="true" requiredMessage="Seleccione el tipo">
+                        <f:selectItem itemLabel="Seleccione" itemValue="-1"/>
+                        <f:selectItem itemLabel="Cabecera" itemValue="1"/>
+                        <f:selectItem itemLabel="Municipio" itemValue="0"/>
+
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Departamento" for="depto"/>
+
+                    <h:selectOneMenu id="depto" value="#{munisBean.current.idDepto.idDepto}">
+
+                        <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                        <f:selectItems value="#{munisBean.itemsDeptos}"/>
+
+                    </h:selectOneMenu>
+
+                    <f:facet name="footer">
+
+                        <p:commandButton id="buttonGuardar" value="Guardar" actionListener="#{munisBean.guardarMuni(event)}" update=":form1:growl" />
+
+                    </f:facet>
+
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <p:commandButton ajax="false" id="linkDeptos" value="Ir Grid Deptos" action="/index"/>
+        </h:form>
+    </h:body>
+</html>
+
