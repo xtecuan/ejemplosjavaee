@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAlumnosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_id}"/>
+                    <h:outputText value="#{alumnosController.selected.id}" title="#{bundle.ViewAlumnosTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_carnet}"/>
+                    <h:outputText value="#{alumnosController.selected.carnet}" title="#{bundle.ViewAlumnosTitle_carnet}"/>
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_nombres}"/>
+                    <h:outputText value="#{alumnosController.selected.nombres}" title="#{bundle.ViewAlumnosTitle_nombres}"/>
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_apellidos}"/>
+                    <h:outputText value="#{alumnosController.selected.apellidos}" title="#{bundle.ViewAlumnosTitle_apellidos}"/>
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_correo}"/>
+                    <h:outputText value="#{alumnosController.selected.correo}" title="#{bundle.ViewAlumnosTitle_correo}"/>
+                    <h:outputText value="#{bundle.ViewAlumnosLabel_fechanac}"/>
+                    <h:outputText value="#{alumnosController.selected.fechanac}" title="#{bundle.ViewAlumnosTitle_fechanac}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{alumnosController.destroyAndView}" value="#{bundle.ViewAlumnosDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewAlumnosEditLink}"/>
+                <br />
+                <h:commandLink action="#{alumnosController.prepareCreate}" value="#{bundle.ViewAlumnosCreateLink}" />
+                <br />
+                <h:commandLink action="#{alumnosController.prepareList}" value="#{bundle.ViewAlumnosShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewAlumnosIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
