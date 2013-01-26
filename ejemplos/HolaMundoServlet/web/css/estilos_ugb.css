@@ -1,0 +1,23 @@
+/* 
+    Document   : estilos_ugb
+    Created on : Jan 26, 2013, 12:26:36 PM
+    Author     : xtecuan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+table{
+
+    width: 800px;
+}
+
+h1{
+    
+    color: blue;
+    font-family: sans-serif;
+}
+
