@@ -11,9 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Busqueda Alumnos</title>
-        
+
         <link href="${pageContext.request.servletContext.contextPath}/css/estilos_ugb.css" rel="stylesheet" media="screen" type="text/css"/>
-        
+
     </head>
     <body>
         <h1>Ingrese el nombre del alumno a buscar</h1>
@@ -45,20 +45,30 @@
             </thead>
             <tbody>
 
-                <c:forEach var="alumno" items="${respuesta}">
+                <c:if test="${not empty respuesta}">
 
-                    <tr>
-                        <td>${alumno.id}</td>
-                        <td>${alumno.carnet}</td>
-                        <td>${alumno.nombres}</td>
-                        <td>${alumno.apellidos}</td>
-                        <td>${alumno.correo}</td>
-                        <td>${alumno.fechanac}</td>
-                    </tr>
 
-                    <c:remove scope="session" var="respuesta"/>
-                </c:forEach>
+                    <jsp:useBean id="formato" scope="page" class="org.xtecuan.modelo.utils.FormateadorFecha" />
 
+                    <c:forEach var="alumno" items="${respuesta}">
+
+                        <tr>
+                            <td>${alumno.id}</td>
+                            <td>${alumno.carnet}</td>
+                            <td>${alumno.nombres}</td>
+                            <td>${alumno.apellidos}</td>
+                            <td>${alumno.correo}</td>
+                            <td>
+                                <c:if test="${not empty alumno.fechanac}">
+                                    <c:set property="fechaObj" target="${formato}" value="${alumno.fechanac}"/>
+                                    ${formato.fechaFormato}
+                                </c:if>
+                            </td>
+                        </tr>
+
+                        <c:remove scope="session" var="respuesta"/>
+                    </c:forEach>
+                </c:if>
 
                 <c:if test="${not empty error}">
                     <tr>
