@@ -5,21 +5,19 @@
 package org.xtecuan.modelo.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,8 +42,9 @@ public class CatDepartamentos implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "desdepto", nullable = false, length = 50)
     private String desdepto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coddepto", fetch = FetchType.LAZY)
-    private List<CatMunicipios> catMunicipiosList;
+    @JoinColumn(name = "codpais", referencedColumnName = "id_pais", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private CatPaises codpais;
 
     public CatDepartamentos() {
     }
@@ -75,13 +74,12 @@ public class CatDepartamentos implements Serializable {
         this.desdepto = desdepto;
     }
 
-    @XmlTransient
-    public List<CatMunicipios> getCatMunicipiosList() {
-        return catMunicipiosList;
+    public CatPaises getCodpais() {
+        return codpais;
     }
 
-    public void setCatMunicipiosList(List<CatMunicipios> catMunicipiosList) {
-        this.catMunicipiosList = catMunicipiosList;
+    public void setCodpais(CatPaises codpais) {
+        this.codpais = codpais;
     }
 
     @Override

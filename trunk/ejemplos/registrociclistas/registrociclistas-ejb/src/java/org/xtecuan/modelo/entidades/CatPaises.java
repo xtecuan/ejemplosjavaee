@@ -48,7 +48,7 @@ public class CatPaises implements Serializable {
     @Column(name = "cod_area_tel", length = 3)
     private String codAreaTel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codpais", fetch = FetchType.LAZY)
-    private List<DetCiclistas> detCiclistasList;
+    private List<CatDepartamentos> catDepartamentosList;
 
     public CatPaises() {
     }
@@ -82,12 +82,12 @@ public class CatPaises implements Serializable {
     }
 
     @XmlTransient
-    public List<DetCiclistas> getDetCiclistasList() {
-        return detCiclistasList;
+    public List<CatDepartamentos> getCatDepartamentosList() {
+        return catDepartamentosList;
     }
 
-    public void setDetCiclistasList(List<DetCiclistas> detCiclistasList) {
-        this.detCiclistasList = detCiclistasList;
+    public void setCatDepartamentosList(List<CatDepartamentos> catDepartamentosList) {
+        this.catDepartamentosList = catDepartamentosList;
     }
 
     @Override
