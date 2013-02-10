@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./apptemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        <h:outputText value="Mantto. de Ciclistas"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form1">
+
+            <p:growl id="growl" showDetail="true" sticky="false"/>
+
+            <p:panel id="panelform">
+
+
+                <h:panelGrid columns="2">
+
+
+                    <h:outputLabel  value="Correo" for="correo"/>
+                    <p:inputText id="correo" value="#{manttoCiclistas.current.correo}" required="true"
+                                 requiredMessage="Se requiere que ingrese el correo"/>
+
+                    <h:outputLabel  value="Alias (Nickname)" for="alias"/>
+                    <p:inputText id="alias" value="#{manttoCiclistas.current.alias}" required="true" 
+                                 requiredMessage="Se requiere el nombre del alias(Nickname)"/>
+
+                    <h:outputLabel  value="Clave (max 15 caracteres)" for="clave"/>
+
+                    <h:inputSecret id="clave" value="#{manttoCiclistas.current.clave}" required="true"
+                                   requiredMessage="Se requiere ingresar la clave para su registro (15 caracteres)"/>
+                    <h:outputLabel  value="Reingreso de Clave (max 15 caracteres)" for="clave1"/>
+                    <h:inputSecret id="clave1" value="#{manttoCiclistas.clave1}" required="true" 
+                                   requiredMessage="Se requiere reingresar la clave para su registro (15 caracteres)"/>
+
+                    <f:facet name="footer">
+
+                        <p:commandButton update=":form1:growl,:form1:panelform" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+
+                    </f:facet>
+
+                </h:panelGrid>
+
+
+
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
