@@ -13,6 +13,8 @@ import javax.faces.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.xtecuan.modelo.ejb.facade.CiclistasFacade;
 import org.xtecuan.modelo.entidades.Ciclistas;
+import org.xtecuan.modelo.entidades.DetCiclistas;
+import org.xtecuan.vistacontrolador.modelo.CiclistasDataModel;
 
 /**
  *
@@ -25,6 +27,7 @@ public class ManttoCiclistas implements Serializable {
     private CiclistasFacade ciclistasFacade;
     private Ciclistas current;
     private String clave1;
+    private CiclistasDataModel modeloTabla;
 
     /**
      * Creates a new instance of ManttoCiclistas
@@ -35,11 +38,18 @@ public class ManttoCiclistas implements Serializable {
     @PostConstruct
     private void init() {
         initInstance();
+        initModeloTabla();
+    }
+
+    private void initModeloTabla() {
+
+        modeloTabla = new CiclistasDataModel(ciclistasFacade);
     }
 
     private void initInstance() {
 
         current = new Ciclistas();
+//        current.setDetCiclistas(new DetCiclistas());
         clave1 = "";
 
     }
@@ -68,8 +78,9 @@ public class ManttoCiclistas implements Serializable {
 
             logger.info("Se creo un ciclista con id: " + current.getIdCiclista());
             addMessage("Se creo un ciclista: ", "Id: " + current.getIdCiclista());
-            
+
             initInstance();
+            initModeloTabla();
 
         } else {
             logger.error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
@@ -88,5 +99,13 @@ public class ManttoCiclistas implements Serializable {
     public void addError(String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 summary, detail));
+    }
+
+    public CiclistasDataModel getModeloTabla() {
+        return modeloTabla;
+    }
+
+    public void setModeloTabla(CiclistasDataModel modeloTabla) {
+        this.modeloTabla = modeloTabla;
     }
 }

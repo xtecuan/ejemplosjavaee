@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./apptemplate.xhtml"
+                template="/templates/apptemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
@@ -16,7 +16,7 @@
 
             <p:growl id="growl" showDetail="true" sticky="false"/>
 
-            <p:panel id="panelform">
+            <p:panel id="panelform" style="width: 800px">
 
 
                 <h:panelGrid columns="2">
@@ -40,7 +40,7 @@
 
                     <f:facet name="footer">
 
-                        <p:commandButton update=":form1:growl,:form1:panelform" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
 
                     </f:facet>
 
@@ -48,8 +48,61 @@
 
 
 
+
+
             </p:panel>
+
         </h:form>
+
+        <h:form id="form2">
+
+            <p:panel id="paneltable">
+
+                <p:dataTable id="tablaCiclistas" rows="5" var="ci" value="#{manttoCiclistas.modeloTabla}" paginator="true">
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Id"/>
+
+                        </f:facet>
+
+                        <h:outputText value="#{ci.idCiclista}"/>
+
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Correo"/>
+
+                        </f:facet>
+
+                        <h:outputText value="#{ci.correo}"/>
+
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Alias"/>
+
+                        </f:facet>
+
+                        <h:outputText value="#{ci.alias}"/>
+
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </p:panel>
+
+        </h:form>
+
 
     </ui:define>
 

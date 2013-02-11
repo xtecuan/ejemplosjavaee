@@ -20,11 +20,17 @@
 
                 <h:form id="menu">
 
-                    <p:menubar>  
+                    <p:menubar style="width: 800px">  
 
                         <p:submenu label="Inicio" icon="ui-icon-document">  
 
-                            <p:menuitem value="Ir al inicio"  action="/index.jsf" />  
+                            <p:menuitem value="Ir al inicio"  action="/index.jsf?faces-redirect=true" />  
+
+                        </p:submenu>
+                        
+                        <p:submenu label="Registro Ciclistas" icon="ui-icon-document">  
+
+                            <p:menuitem value="Registro"  action="/ciclistas/mantto_ciclistas.jsf?faces-redirect=true" />  
 
                         </p:submenu>
 
@@ -34,7 +40,14 @@
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            
+            <br></br>
+            <br></br>
+            <br></br>
+            <ui:insert  name="content">Content</ui:insert>
+            <br></br>
+            <br></br>
+            <br></br>
         </div>
 
     </h:body>
