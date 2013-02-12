@@ -6,6 +6,7 @@ package org.xtecuan.modelo.ejb.facade.impl;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
@@ -13,9 +14,9 @@ import org.apache.log4j.Logger;
  * @author xtecuan
  */
 public abstract class AbstractFacade<T> {
-    
+
+    private static final String FIND_ALL = ".findAll";
     private static final Logger logger = Logger.getLogger(AbstractFacade.class);
-    
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -46,13 +47,21 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
+//    public List<T> findRange(int[] range) {
+//        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+//        cq.select(cq.from(entityClass));
+//        javax.persistence.Query q = getEntityManager().createQuery(cq);
+//        q.setMaxResults(range[1] - range[0]);
+//        q.setFirstResult(range[0]);
+//        return q.getResultList();
+//    }
     public List<T> findRange(int[] range) {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
-        q.setMaxResults(range[1] - range[0]);
-        q.setFirstResult(range[0]);
-        return q.getResultList();
+
+        Query query = getEntityManager().createNamedQuery(entityClass.getSimpleName() + FIND_ALL, entityClass);
+
+        query.setFirstResult(range[0]);
+        query.setMaxResults(range[1]);
+        return query.getResultList();
     }
 
     public int count() {
@@ -66,7 +75,4 @@ public abstract class AbstractFacade<T> {
     public static Logger getLogger() {
         return logger;
     }
-    
-    
-    
 }
