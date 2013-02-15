@@ -171,25 +171,32 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 //            addError("Error al validar las claves: ", "Las dos claves deben coincidir");
 //        }
 
-        getLogger().info("current: " + current);
-        getLogger().info("currentDet: " + currentDet);
-        getLogger().info("currentPais: " + currentPais);
-        getLogger().info("currentDepto: " + currentDepto);
-        getLogger().info("currentMuni: " + currentMuni);
+        if (current.getClave().equals(clave1)) {
+            getLogger().info("current: " + current);
+            getLogger().info("currentDet: " + currentDet);
+            getLogger().info("currentPais: " + currentPais);
+            getLogger().info("currentDepto: " + currentDepto);
+            getLogger().info("currentMuni: " + currentMuni);
 
-        if (currentPais.getIdPais() != null && currentPais.getIdPais().intValue() > 0) {
+            if (currentPais.getIdPais() != null && currentPais.getIdPais().intValue() > 0) {
 
-            currentDet.setCodpais(currentPais);
-        }
+                currentDet.setCodpais(currentPais);
+            }
 
-        if (currentMuni.getCodmuni() != null && currentMuni.getCodmuni().intValue() > 0) {
-            currentDet.setCodmuni(currentMuni);
-        }
+            if (currentMuni.getCodmuni() != null && currentMuni.getCodmuni().intValue() > 0) {
+                currentDet.setCodmuni(currentMuni);
+            }
 
 
 //        current.setClave(md5Hex(current.getClave()));
 
-        manttoCiclistasFacade.guardarCiclista(current, currentDet);
+            manttoCiclistasFacade.guardarCiclista(current, currentDet);
+            initInstance();
+        } else {
+            getLogger().error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
+
+            addError("Error al validar las claves: ", "Las dos claves deben coincidir");
+        }
 
     }
 
