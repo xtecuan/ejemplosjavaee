@@ -16,49 +16,336 @@
 
             <p:growl id="growl" showDetail="true" sticky="false"/>
 
-            <p:panel id="panelform" style="width: 800px">
+            <p:messages autoUpdate="true" showDetail="true" showSummary="true"/>
+
+            <p:panelGrid>
+
+                <p:row>
+
+                    <p:column>
+                        <p:panelGrid  id="panelinfoper" style="margin-top:20px">
+
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column colspan="4">
+                                        <h:outputText value="Información Personal:"/>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Primer Nombre: *" for="primernombre"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputText size="35" maxlength="55" id="primernombre" value="#{manttoCiclistas.currentDet.primernombre}" 
+                                                 required="true"
+                                                 requiredMessage="Se requiere que ingrese el Primer nombre"/>
+
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Segundo Nombre:" for="segundonombre"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputText size="35" maxlength="55" id="segundonombre" value="#{manttoCiclistas.currentDet.segundonombre}"/>
+                                </p:column>
+                            </p:row>
 
 
-                <h:panelGrid columns="2">
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Primer Apellido: *" for="primerapellido"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputText size="35" maxlength="55" id="primerapellido" value="#{manttoCiclistas.currentDet.primerapellido}" 
+                                                 required="true"
+                                                 requiredMessage="Se requiere que ingrese el Primer Apellido"/>
+
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputLabel  value="Segundo Apellido:" for="segundoapellido"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputText size="35" maxlength="55" id="segundoapellido" value="#{manttoCiclistas.currentDet.segundoapellido}"/>
+                                </p:column>
+                            </p:row>
 
 
-                    <h:outputLabel  value="Correo" for="correo"/>
-                    <p:inputText id="correo" value="#{manttoCiclistas.current.correo}" required="true"
-                                 requiredMessage="Se requiere que ingrese el correo"/>
-
-                    <h:outputLabel  value="Alias (Nickname)" for="alias"/>
-                    <p:inputText id="alias" value="#{manttoCiclistas.current.alias}" required="true" 
-                                 requiredMessage="Se requiere el nombre del alias(Nickname)"/>
-
-                    <h:outputLabel  value="Clave (max 15 caracteres)" for="clave"/>
-
-                    <h:inputSecret id="clave" value="#{manttoCiclistas.current.clave}" required="true"
-                                   requiredMessage="Se requiere ingresar la clave para su registro (15 caracteres)"/>
-                    <h:outputLabel  value="Reingreso de Clave (max 15 caracteres)" for="clave1"/>
-                    <h:inputSecret id="clave1" value="#{manttoCiclistas.clave1}" required="true" 
-                                   requiredMessage="Se requiere reingresar la clave para su registro (15 caracteres)"/>
-
-                    <f:facet name="footer">
-
-                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
-
-                    </f:facet>
-
-                </h:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Apellido de Casada:" for="apellidodecasada"/>
 
 
+                                </p:column>
+
+                                <p:column>
+                                    <p:inputText id="apellidodecasada" size="35" maxlength="55" value="#{manttoCiclistas.currentDet.apellidodecasada}"/>
+
+
+                                </p:column>
+
+                                <p:column>
+                                    <!--p:spacer width="300" height="10" /-->
+                                    <h:outputLabel  value="Fecha de Nacimiento:" for="fechanac"/>
+
+
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="fechanac" effect="slide" pattern="dd/MM/yyyy" navigator="true" showButtonPanel="true"
+                                                value="#{manttoCiclistas.currentDet.fechanac}"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+
+                                <p:column colspan="2">
+
+                                    <p:spacer width="300" height="10" />
+                                    <h:outputLabel  value="Sexo:" for="sexo"/>
+                                </p:column>
+
+                                <p:column colspan="2">
+
+                                    <p:selectOneMenu id="sexo" value="#{manttoCiclistas.currentDet.sexo}">
+
+                                        <f:selectItem itemValue="0" itemLabel="Seleccione:"/>
+
+                                        <f:selectItems value="#{manttoCiclistas.itemsSexo}"/>
+
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Telefono Fijo:" for="telefonofijo"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputMask maxlength="10" id="telefonofijo" value="#{manttoCiclistas.currentDet.telefonofijo}" mask="99-99-9999"/>  
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Telefono Celular:" for="telefonomovil"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputMask maxlength="10" id="telefonomovil" value="#{manttoCiclistas.currentDet.telefonomovil}" mask="99-99-9999"/>  
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+
+                                <p:column>
+                                    <h:outputLabel  value="País:" for="pais"/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="pais" value="#{manttoCiclistas.currentPais.idPais}">
+
+                                        <f:selectItem itemValue="0" itemLabel="Seleccione un País"/>
+
+                                        <f:selectItems value="#{manttoCiclistas.itemsPaises}"/>
+
+                                        <p:ajax update=":form1:deptos"  
+                                                listener="#{manttoCiclistas.manejarCambioPais()}" />
+
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Departamento:" for="deptos"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:selectOneMenu id="deptos" value="#{manttoCiclistas.currentDepto.coddepto}">
+
+                                        <f:selectItem itemValue="0" itemLabel="Seleccione un Depto."/>
+
+                                        <f:selectItems value="#{manttoCiclistas.itemsDeptos}"/>
+
+                                        <p:ajax update=":form1:munis"  
+                                                listener="#{manttoCiclistas.manejarCambioDepto()}" />-->
+
+                                    </p:selectOneMenu>
+
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+
+
+                                <p:column>
+
+                                    <h:outputLabel  value="Municipio:" for="munis"/>
+                                </p:column>
+
+                                <p:column>
+
+                                    <p:selectOneMenu id="munis" value="#{manttoCiclistas.currentMuni.codmuni}">
+
+                                        <f:selectItem itemValue="0" itemLabel="Seleccione un Municipio."/>
+
+                                        <f:selectItems value="#{manttoCiclistas.itemsMunis}"/>
+
+                                        <!-- <p:ajax update=":form1:deptos"  
+                                                 listener="# {manttoCiclistas.manejarCambioPais()}" />-->
+
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                                <p:column>
+
+                                    <h:outputLabel  value="Dirección:" for="direccion"/>
+
+
+                                </p:column>
+                                <p:column>
+
+                                    <p:inputTextarea id="direccion" value="#{manttoCiclistas.currentDet.direccion}" rows="6" cols="33" />  
+
+                                </p:column>
+
+                            </p:row>
+
+
+                            <p:row>
+
+
+                                <p:column>
+
+                                    <h:outputLabel value="DUI: " for="dui"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:inputMask id="dui"  mask="99999999-9" value="#{manttoCiclistas.currentDet.dui}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputLabel value="NIT: " for="nit"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:inputMask id="nit"  mask="9999-999999-999-9" value="#{manttoCiclistas.currentDet.nit}"/>
+                                </p:column>
+
+
+                            </p:row>
+
+
+                            <p:row>
+
+                                <p:column>
+                                    <h:outputLabel value="http://facebook.com/" for="facebook"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:inputText id="facebook" value="#{manttoCiclistas.currentDet.facebook}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputLabel value="http://twitter.com/" for="twitter"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:inputText id="twitter" value="#{manttoCiclistas.currentDet.twitter}"/>
+                                </p:column>
+
+                            </p:row>
 
 
 
-            </p:panel>
+                        </p:panelGrid>
+
+                    </p:column>
+
+                </p:row>
+
+                <p:row>
+
+                    <p:column>
+                        <p:panelGrid  id="panelform" style="margin-top:20px">
+
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column colspan="4">
+                                        <h:outputText value="Información Cuenta:"/>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Correo: *" for="correo"/>
+
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="correo" value="#{manttoCiclistas.current.correo}" 
+                                                 required="true"
+                                                 requiredMessage="Se requiere que ingrese el correo"/>
+
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Alias (Nickname): *" for="alias"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText maxlength="25" id="alias" value="#{manttoCiclistas.current.alias}" required="true" 
+                                                 requiredMessage="Se requiere el nombre del alias(Nickname)"/>
+                                </p:column>
+                            </p:row>
+
+
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel  value="Clave (max 15 caracteres): *" for="clave"/>
+                                </p:column>
+                                <p:column>
+                                    <p:password  maxlength="15" id="clave" value="#{manttoCiclistas.current.clave}" required="true"
+                                                 requiredMessage="Se requiere ingresar la clave para su registro (15 caracteres)"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Reingreso de Clave (max 15 caracteres): *" for="clave1"/>
+                                </p:column>
+                                <p:column>
+                                    <p:password maxlength="15" id="clave1" value="#{manttoCiclistas.clave1}" required="true" 
+                                                requiredMessage="Se requiere reingresar la clave para su registro (15 caracteres)"/>
+                                </p:column>
+                            </p:row>
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4">
+                                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+
+
+
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
 
         </h:form>
 
+        <br></br>
+
+        <br></br>
+
         <h:form id="form2">
 
-            <p:panel id="paneltable">
+            <p:panel style="width: 930px" id="paneltable">
 
-                <p:dataTable id="tablaCiclistas" rows="5" var="ci" 
+                <p:dataTable style="width: 900px" id="tablaCiclistas" rows="5" var="ci" 
                              value="#{manttoCiclistas.modeloTabla}" paginator="true">
 
                     <p:column>
