@@ -5,29 +5,46 @@
 package org.xtecuan.vistacontrolador;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import org.apache.log4j.Logger;
-import org.xtecuan.modelo.ejb.facade.CiclistasFacade;
+import javax.faces.model.SelectItem;
+import org.xtecuan.modelo.ejb.facade.ManttoCiclistasFacade;
+import org.xtecuan.modelo.entidades.CatDepartamentos;
+import org.xtecuan.modelo.entidades.CatMunicipios;
+import org.xtecuan.modelo.entidades.CatPaises;
 import org.xtecuan.modelo.entidades.Ciclistas;
 import org.xtecuan.modelo.entidades.DetCiclistas;
 import org.xtecuan.vistacontrolador.modelo.CiclistasDataModel;
+import org.xtecuan.vistacontrolador.utils.ViewUtils;
 
 /**
  *
  * @author xtecuan
  */
-public class ManttoCiclistas implements Serializable {
+public class ManttoCiclistas extends XBaseBean implements Serializable {
 
-    private static final Logger logger = Logger.getLogger(ManttoCiclistas.class);
     @EJB
-    private CiclistasFacade ciclistasFacade;
+    private ManttoCiclistasFacade manttoCiclistasFacade;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private Ciclistas current;
+    private DetCiclistas currentDet;
+    private CatPaises currentPais;
+    private CatDepartamentos currentDepto;
+    private CatMunicipios currentMuni;
     private String clave1;
     private CiclistasDataModel modeloTabla;
+    private Date minimalDate;
+    private String minimalDateStr;
+    private List<SelectItem> itemsPaises;
+    private List<SelectItem> itemsDeptos;
+    private List<SelectItem> itemsMunis;
+    private List<SelectItem> itemsSexo;
 
     /**
      * Creates a new instance of ManttoCiclistas
@@ -39,18 +56,50 @@ public class ManttoCiclistas implements Serializable {
     private void init() {
         initInstance();
         initModeloTabla();
+        initMinimalDate();
+        initItemsPaises();
+        initItemsSexo();
+    }
+
+    private void initItemsSexo() {
+
+        itemsSexo = ViewUtils.fromSexoEnumToListSelectItem();
+    }
+
+    private void initItemsPaises() {
+        itemsPaises = ViewUtils.fromListCatPaisesToListSelectItem(manttoCiclistasFacade.findAllPaises());
     }
 
     private void initModeloTabla() {
 
-        modeloTabla = new CiclistasDataModel(ciclistasFacade);
+        modeloTabla = new CiclistasDataModel(manttoCiclistasFacade.getFacadeCiclistas());
     }
 
     private void initInstance() {
 
         current = new Ciclistas();
+        currentDet = new DetCiclistas();
+        currentPais = new CatPaises();
+        currentDepto = new CatDepartamentos();
+        currentMuni = new CatMunicipios();
+
+
 //        current.setDetCiclistas(new DetCiclistas());
+//        current.getDetCiclistas().setCodpais(new CatPaises());
+//        current.getDetCiclistas().setCodmuni(new CatMunicipios());
+//        current.getDetCiclistas().getCodmuni().setCoddepto(new CatDepartamentos());
         clave1 = "";
+
+    }
+
+    private void initMinimalDate() {
+        try {
+            minimalDate = sdf.parse("01/01/1900");
+        } catch (ParseException ex) {
+            getLogger().error("Error al inicializar la fecha minima: ", ex);
+        }
+
+        minimalDateStr = "01/01/1900";
 
     }
 
@@ -70,35 +119,78 @@ public class ManttoCiclistas implements Serializable {
         this.clave1 = clave1;
     }
 
-    public void guardarCiclista(ActionEvent event) {
+    public void manejarCambioPais() {
 
-        if (current.getClave().equals(clave1)) {
+        itemsDeptos = new ArrayList<SelectItem>(0);
 
-            ciclistasFacade.create(current);
+        Integer idPais = currentPais.getIdPais();
 
-            logger.info("Se creo un ciclista con id: " + current.getIdCiclista());
-            addMessage("Se creo un ciclista: ", "Id: " + current.getIdCiclista());
+        if (idPais != null && idPais.intValue() > 0) {
+            itemsDeptos = ViewUtils.fromListCatDepartamentosToListSelectItem(manttoCiclistasFacade.findDeptosByIdPais(idPais));
+        }
 
-            initInstance();
-            initModeloTabla();
 
-        } else {
-            logger.error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
-
-            addError("Error al validar las claves: ", "Las dos claves deben coincidir");
+        if (itemsDeptos.isEmpty()) {
+            addMessage("No existen departamentos para: ", "Pais: " + idPais);
         }
 
     }
 
-    public void addMessage(String summary, String detail) {
+    public void manejarCambioDepto() {
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                summary, detail));
+        itemsMunis = new ArrayList<SelectItem>(0);
+
+        Integer coddepto = currentDepto.getCoddepto();
+
+        if (coddepto != null && coddepto.intValue() > 0) {
+
+            itemsMunis = ViewUtils.fromListCatMunicipiosToListSelectItem(manttoCiclistasFacade.findMunisByCodDepto(coddepto));
+        }
+
+        if (itemsMunis.isEmpty()) {
+            addMessage("No existen Municipios para: ", "Depto.: " + coddepto);
+        }
+
     }
 
-    public void addError(String summary, String detail) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                summary, detail));
+    public void guardarCiclista(ActionEvent event) {
+
+//        if (current.getClave().equals(clave1)) {
+//
+//            ciclistasFacade.create(current);
+//
+//            getLogger().info("Se creo un ciclista con id: " + current.getIdCiclista());
+//            addMessage("Se creo un ciclista: ", "Id: " + current.getIdCiclista());
+//
+//            initInstance();
+//            initModeloTabla();
+//
+//        } else {
+//            getLogger().error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
+//
+//            addError("Error al validar las claves: ", "Las dos claves deben coincidir");
+//        }
+
+        getLogger().info("current: " + current);
+        getLogger().info("currentDet: " + currentDet);
+        getLogger().info("currentPais: " + currentPais);
+        getLogger().info("currentDepto: " + currentDepto);
+        getLogger().info("currentMuni: " + currentMuni);
+
+        if (currentPais.getIdPais() != null && currentPais.getIdPais().intValue() > 0) {
+
+            currentDet.setCodpais(currentPais);
+        }
+
+        if (currentMuni.getCodmuni() != null && currentMuni.getCodmuni().intValue() > 0) {
+            currentDet.setCodmuni(currentMuni);
+        }
+
+
+//        current.setClave(md5Hex(current.getClave()));
+
+        manttoCiclistasFacade.guardarCiclista(current, currentDet);
+
     }
 
     public CiclistasDataModel getModeloTabla() {
@@ -107,5 +199,85 @@ public class ManttoCiclistas implements Serializable {
 
     public void setModeloTabla(CiclistasDataModel modeloTabla) {
         this.modeloTabla = modeloTabla;
+    }
+
+    public Date getMinimalDate() {
+        return minimalDate;
+    }
+
+    public void setMinimalDate(Date minimalDate) {
+        this.minimalDate = minimalDate;
+    }
+
+    public String getMinimalDateStr() {
+        return minimalDateStr;
+    }
+
+    public void setMinimalDateStr(String minimalDateStr) {
+        this.minimalDateStr = minimalDateStr;
+    }
+
+    public List<SelectItem> getItemsPaises() {
+        return itemsPaises;
+    }
+
+    public void setItemsPaises(List<SelectItem> itemsPaises) {
+        this.itemsPaises = itemsPaises;
+    }
+
+    public List<SelectItem> getItemsDeptos() {
+        return itemsDeptos;
+    }
+
+    public void setItemsDeptos(List<SelectItem> itemsDeptos) {
+        this.itemsDeptos = itemsDeptos;
+    }
+
+    public List<SelectItem> getItemsMunis() {
+        return itemsMunis;
+    }
+
+    public void setItemsMunis(List<SelectItem> itemsMunis) {
+        this.itemsMunis = itemsMunis;
+    }
+
+    public DetCiclistas getCurrentDet() {
+        return currentDet;
+    }
+
+    public void setCurrentDet(DetCiclistas currentDet) {
+        this.currentDet = currentDet;
+    }
+
+    public CatPaises getCurrentPais() {
+        return currentPais;
+    }
+
+    public void setCurrentPais(CatPaises currentPais) {
+        this.currentPais = currentPais;
+    }
+
+    public CatDepartamentos getCurrentDepto() {
+        return currentDepto;
+    }
+
+    public void setCurrentDepto(CatDepartamentos currentDepto) {
+        this.currentDepto = currentDepto;
+    }
+
+    public CatMunicipios getCurrentMuni() {
+        return currentMuni;
+    }
+
+    public void setCurrentMuni(CatMunicipios currentMuni) {
+        this.currentMuni = currentMuni;
+    }
+
+    public List<SelectItem> getItemsSexo() {
+        return itemsSexo;
+    }
+
+    public void setItemsSexo(List<SelectItem> itemsSexo) {
+        this.itemsSexo = itemsSexo;
     }
 }
