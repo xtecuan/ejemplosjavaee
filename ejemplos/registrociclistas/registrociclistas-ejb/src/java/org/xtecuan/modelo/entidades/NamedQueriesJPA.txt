@@ -1,0 +1,74 @@
+Queries App Ciclistas Urbanos
+
+@NamedQuery(name = "CatDepartamentos.findByCodPais", query = "SELECT c FROM CatDepartamentos c WHERE c.codpais.idPais=:idPais")
+
+@NamedQuery(name = "CatMunicipios.findByCoddepto", query = "SELECT c FROM CatMunicipios c WHERE c.coddepto.coddepto=:coddepto")
+
+
+
+
+############################################################################################################
+https://en.wikibooks.org/wiki/Java_Persistence/Identity_and_Sequencing
+######Teoric Sequencing
+
+JPA 2.0
+
+Defining an Id for a OneToOne or ManyToOne in JPA 2.0 is much simpler. The @Id annotation or id XML attribute can be added to a OneToOne or ManyToOne mapping. The Id used for the object will be derived from the target object's Id. If the Id is a single value, then the source object's Id is the same as the target object's Id. If it is a composite Id, then the IdClass will contain the Basic Id attributes, and the target object's Id as the relationship value. If the target object also has a composite Id, then the source object's IdClass will contain the target object's IdClass.
+Example JPA 2.0 ManyToOne id annotation
+
+...
+@Entity
+@IdClass(PhonePK.class)
+public class Phone {
+ 
+    @Id
+    private String type;
+ 
+    @ManyToOne
+    @Id
+    @JoinColumn(name="OWNER_ID", referencedColumnName="EMP_ID")
+    private Employee owner;
+    ...//getters and setters
+}
+
+Example JPA 2.0 ManyToOne id XML
+
+<entity name="Address" class="org.acme.Address" access="FIELD">
+    <id-class class="org.acme.PhonePK"/>
+    <attributes>
+        <id name="type"/>
+        <many-to-one name="owner" id="true">
+            <join-column name="OWNER_ID" referencedColumnName="EMP_ID"/>
+        </many-to-one>
+    </attributes>
+<entity/>
+
+Example JPA 2.0 id class
+
+...
+public class PhonePK {
+    private String type;
+    private long owner;
+ 
+    public PhonePK() {}
+ 
+    public PhonePK(String type, long owner) {
+        this.type = type;
+        this.owner = owner;
+    }
+ 
+    public boolean equals(Object object) {
+        if (object instanceof PhonePK) {
+            PhonePK pk = (PhonePK)object;
+            return type.equals(pk.type) && owner == pk.owner;
+        } else {
+            return false;
+        }
+    }
+ 
+    public int hashCode() {
+        return type.hashCode() + owner;
+    }
+ 
+}
+

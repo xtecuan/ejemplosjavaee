@@ -32,8 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CatMunicipios.findAll", query = "SELECT c FROM CatMunicipios c"),
     @NamedQuery(name = "CatMunicipios.findByCodmuni", query = "SELECT c FROM CatMunicipios c WHERE c.codmuni = :codmuni"),
-    @NamedQuery(name = "CatMunicipios.findByDesmuni", query = "SELECT c FROM CatMunicipios c WHERE c.desmuni = :desmuni")})
+    @NamedQuery(name = "CatMunicipios.findByDesmuni", query = "SELECT c FROM CatMunicipios c WHERE c.desmuni = :desmuni"),
+    @NamedQuery(name = "CatMunicipios.findByCoddepto", query = "SELECT c FROM CatMunicipios c WHERE c.coddepto.coddepto=:coddepto")})
 public class CatMunicipios implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -113,5 +115,4 @@ public class CatMunicipios implements Serializable {
     public String toString() {
         return "org.xtecuan.modelo.entidades.CatMunicipios[ codmuni=" + codmuni + " ]";
     }
-    
 }
