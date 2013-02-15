@@ -10,12 +10,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,11 +33,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetCiclistas.findAll", query = "SELECT d FROM DetCiclistas d"),
-    @NamedQuery(name = "DetCiclistas.findByIdCiclista", query = "SELECT d FROM DetCiclistas d WHERE d.idCiclista = :idCiclista"),
+    @NamedQuery(name = "DetCiclistas.findByCoddetciclista", query = "SELECT d FROM DetCiclistas d WHERE d.coddetciclista = :coddetciclista"),
+    @NamedQuery(name = "DetCiclistas.findByDui", query = "SELECT d FROM DetCiclistas d WHERE d.dui = :dui"),
+    @NamedQuery(name = "DetCiclistas.findByNit", query = "SELECT d FROM DetCiclistas d WHERE d.nit = :nit"),
     @NamedQuery(name = "DetCiclistas.findByPrimernombre", query = "SELECT d FROM DetCiclistas d WHERE d.primernombre = :primernombre"),
     @NamedQuery(name = "DetCiclistas.findBySegundonombre", query = "SELECT d FROM DetCiclistas d WHERE d.segundonombre = :segundonombre"),
     @NamedQuery(name = "DetCiclistas.findByPrimerapellido", query = "SELECT d FROM DetCiclistas d WHERE d.primerapellido = :primerapellido"),
     @NamedQuery(name = "DetCiclistas.findBySegundoapellido", query = "SELECT d FROM DetCiclistas d WHERE d.segundoapellido = :segundoapellido"),
+    @NamedQuery(name = "DetCiclistas.findByApellidodecasada", query = "SELECT d FROM DetCiclistas d WHERE d.apellidodecasada = :apellidodecasada"),
     @NamedQuery(name = "DetCiclistas.findByFechanac", query = "SELECT d FROM DetCiclistas d WHERE d.fechanac = :fechanac"),
     @NamedQuery(name = "DetCiclistas.findByTelefonofijo", query = "SELECT d FROM DetCiclistas d WHERE d.telefonofijo = :telefonofijo"),
     @NamedQuery(name = "DetCiclistas.findByTelefonomovil", query = "SELECT d FROM DetCiclistas d WHERE d.telefonomovil = :telefonomovil"),
@@ -44,12 +48,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DetCiclistas.findByFacebook", query = "SELECT d FROM DetCiclistas d WHERE d.facebook = :facebook"),
     @NamedQuery(name = "DetCiclistas.findByTwitter", query = "SELECT d FROM DetCiclistas d WHERE d.twitter = :twitter")})
 public class DetCiclistas implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_ciclista", nullable = false)
-    private Integer idCiclista;
+    @Column(name = "coddetciclista", nullable = false)
+    private Integer coddetciclista;
+    @Size(max = 10)
+    @Column(name = "dui", length = 10)
+    private String dui;
+    @Size(max = 17)
+    @Column(name = "nit", length = 17)
+    private String nit;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 55)
@@ -66,6 +77,12 @@ public class DetCiclistas implements Serializable {
     @Size(max = 55)
     @Column(name = "segundoapellido", length = 55)
     private String segundoapellido;
+    @Size(max = 55)
+    @Column(name = "apellidodecasada", length = 55)
+    private String apellidodecasada;
+    @Size(max = 3)
+    @Column(name = "sexo", length = 3)
+    private String sexo;
     @Column(name = "fechanac")
     @Temporal(TemporalType.DATE)
     private Date fechanac;
@@ -87,32 +104,49 @@ public class DetCiclistas implements Serializable {
     @JoinColumn(name = "codpais", referencedColumnName = "id_pais", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CatPaises codpais;
-    @JoinColumn(name = "id_ciclista", referencedColumnName = "id_ciclista", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private Ciclistas ciclistas;
     @JoinColumn(name = "codmuni", referencedColumnName = "codmuni")
     @ManyToOne(fetch = FetchType.LAZY)
     private CatMunicipios codmuni;
+    @Id
+    @JoinColumn(name = "id_ciclista", referencedColumnName = "id_ciclista", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Ciclistas idCiclista;
 
     public DetCiclistas() {
     }
 
-    public DetCiclistas(Integer idCiclista) {
-        this.idCiclista = idCiclista;
+    public DetCiclistas(Integer coddetciclista) {
+        this.coddetciclista = coddetciclista;
     }
 
-    public DetCiclistas(Integer idCiclista, String primernombre, String primerapellido) {
-        this.idCiclista = idCiclista;
+    public DetCiclistas(Integer coddetciclista, String primernombre, String primerapellido) {
+        this.coddetciclista = coddetciclista;
         this.primernombre = primernombre;
         this.primerapellido = primerapellido;
     }
 
-    public Integer getIdCiclista() {
-        return idCiclista;
+    public Integer getCoddetciclista() {
+        return coddetciclista;
     }
 
-    public void setIdCiclista(Integer idCiclista) {
-        this.idCiclista = idCiclista;
+    public void setCoddetciclista(Integer coddetciclista) {
+        this.coddetciclista = coddetciclista;
+    }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
     }
 
     public String getPrimernombre() {
@@ -145,6 +179,14 @@ public class DetCiclistas implements Serializable {
 
     public void setSegundoapellido(String segundoapellido) {
         this.segundoapellido = segundoapellido;
+    }
+
+    public String getApellidodecasada() {
+        return apellidodecasada;
+    }
+
+    public void setApellidodecasada(String apellidodecasada) {
+        this.apellidodecasada = apellidodecasada;
     }
 
     public Date getFechanac() {
@@ -203,14 +245,6 @@ public class DetCiclistas implements Serializable {
         this.codpais = codpais;
     }
 
-    public Ciclistas getCiclistas() {
-        return ciclistas;
-    }
-
-    public void setCiclistas(Ciclistas ciclistas) {
-        this.ciclistas = ciclistas;
-    }
-
     public CatMunicipios getCodmuni() {
         return codmuni;
     }
@@ -219,10 +253,26 @@ public class DetCiclistas implements Serializable {
         this.codmuni = codmuni;
     }
 
+    public Ciclistas getIdCiclista() {
+        return idCiclista;
+    }
+
+    public void setIdCiclista(Ciclistas idCiclista) {
+        this.idCiclista = idCiclista;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCiclista != null ? idCiclista.hashCode() : 0);
+        hash += (coddetciclista != null ? coddetciclista.hashCode() : 0);
         return hash;
     }
 
@@ -233,7 +283,7 @@ public class DetCiclistas implements Serializable {
             return false;
         }
         DetCiclistas other = (DetCiclistas) object;
-        if ((this.idCiclista == null && other.idCiclista != null) || (this.idCiclista != null && !this.idCiclista.equals(other.idCiclista))) {
+        if ((this.coddetciclista == null && other.coddetciclista != null) || (this.coddetciclista != null && !this.coddetciclista.equals(other.coddetciclista))) {
             return false;
         }
         return true;
@@ -241,7 +291,6 @@ public class DetCiclistas implements Serializable {
 
     @Override
     public String toString() {
-        return "org.xtecuan.modelo.entidades.DetCiclistas[ idCiclista=" + idCiclista + " ]";
+        return "org.xtecuan.modelo.entidades.DetCiclistas[ coddetciclista=" + coddetciclista + " ]";
     }
-    
 }

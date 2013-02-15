@@ -5,7 +5,9 @@
 package org.xtecuan.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,8 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CatDepartamentos.findAll", query = "SELECT c FROM CatDepartamentos c"),
     @NamedQuery(name = "CatDepartamentos.findByCoddepto", query = "SELECT c FROM CatDepartamentos c WHERE c.coddepto = :coddepto"),
-    @NamedQuery(name = "CatDepartamentos.findByDesdepto", query = "SELECT c FROM CatDepartamentos c WHERE c.desdepto = :desdepto")})
+    @NamedQuery(name = "CatDepartamentos.findByDesdepto", query = "SELECT c FROM CatDepartamentos c WHERE c.desdepto = :desdepto"),
+    @NamedQuery(name = "CatDepartamentos.findByCodPais", query = "SELECT c FROM CatDepartamentos c WHERE c.codpais.idPais=:idPais")})
 public class CatDepartamentos implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -42,6 +48,8 @@ public class CatDepartamentos implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "desdepto", nullable = false, length = 50)
     private String desdepto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coddepto", fetch = FetchType.LAZY)
+    private List<CatMunicipios> catMunicipiosList;
     @JoinColumn(name = "codpais", referencedColumnName = "id_pais", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CatPaises codpais;
@@ -72,6 +80,15 @@ public class CatDepartamentos implements Serializable {
 
     public void setDesdepto(String desdepto) {
         this.desdepto = desdepto;
+    }
+
+    @XmlTransient
+    public List<CatMunicipios> getCatMunicipiosList() {
+        return catMunicipiosList;
+    }
+
+    public void setCatMunicipiosList(List<CatMunicipios> catMunicipiosList) {
+        this.catMunicipiosList = catMunicipiosList;
     }
 
     public CatPaises getCodpais() {
@@ -106,5 +123,4 @@ public class CatDepartamentos implements Serializable {
     public String toString() {
         return "org.xtecuan.modelo.entidades.CatDepartamentos[ coddepto=" + coddepto + " ]";
     }
-    
 }
