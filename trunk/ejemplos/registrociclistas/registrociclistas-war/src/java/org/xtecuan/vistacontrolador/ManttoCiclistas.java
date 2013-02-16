@@ -204,9 +204,52 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 
     }
 
+    public void delete(ActionEvent event) {
+
+
+        if (selected != null && selected.getIdCiclista() > 0) {
+
+            Integer id = selected.getIdCiclista();
+
+            manttoCiclistasFacade.borrarCiclista(selected);
+
+            addMessage("Se borro un registro", "con Id: " + id);
+
+        } else {
+
+            addMessage("Seleccione un ciclista: ", "Para Borrar");
+        }
+
+    }
+
     public void editarCiclista(ActionEvent event) {
-        
-        
+
+        if (current.getClave().equals(clave1)) {
+            getLogger().info("current: " + current);
+            getLogger().info("currentDet: " + currentDet);
+            getLogger().info("currentPais: " + currentPais);
+            getLogger().info("currentDepto: " + currentDepto);
+            getLogger().info("currentMuni: " + currentMuni);
+
+            if (currentPais.getIdPais() != null && currentPais.getIdPais().intValue() > 0) {
+
+                currentDet.setCodpais(currentPais);
+            }
+
+            if (currentMuni.getCodmuni() != null && currentMuni.getCodmuni().intValue() > 0) {
+                currentDet.setCodmuni(currentMuni);
+            }
+
+
+            Ciclistas c = manttoCiclistasFacade.actualizarCiclista(current, currentDet);
+            initInstance();
+            insert = Boolean.TRUE;
+            addMessage("Se actualizo un ciclista: ", "Id: " + c.getIdCiclista());
+        } else {
+            getLogger().error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
+
+            addError("Error al validar las claves: ", "Las dos claves deben coincidir");
+        }
     }
 
     private void populateDeptosAndMunisForEdit(Ciclistas ciclista) {
