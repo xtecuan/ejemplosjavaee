@@ -119,4 +119,41 @@ public class ManttoCiclistasFacade {
         return ciclista;
 
     }
+
+    public Ciclistas actualizarCiclista(Ciclistas ciclista, DetCiclistas detalle) {
+
+        try {
+
+            ciclista.setClave(securityToolsBean.md5Hex(ciclista.getClave()));
+
+            detalle.setIdCiclista(ciclista);
+            List<DetCiclistas> det = new ArrayList<DetCiclistas>(0);
+            det.add(detalle);
+            ciclista.setDetCiclistasList(det);
+            ciclistasFacade.edit(ciclista);
+            getEntityManager().flush();
+
+        } catch (Exception e) {
+            logger.error("Error al ejecutar el metodo: actualizarCiclista ", e);
+        }
+
+
+        return ciclista;
+    }
+
+    public void borrarCiclista(Ciclistas ciclista) {
+
+        try {
+
+//            for (DetCiclistas det : ciclista.getDetCiclistasList()) {
+//                detCiclistasFacade.remove(det);
+//            }
+
+            ciclistasFacade.remove(ciclista);
+            getEntityManager().flush();
+
+        } catch (Exception e) {
+            logger.error("Error al ejecutar el metodo: borrarCiclista ", e);
+        }
+    }
 }
