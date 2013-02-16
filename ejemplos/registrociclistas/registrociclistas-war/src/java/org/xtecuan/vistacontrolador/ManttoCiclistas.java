@@ -190,8 +190,9 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 
 //        current.setClave(md5Hex(current.getClave()));
 
-            manttoCiclistasFacade.guardarCiclista(current, currentDet);
+            Ciclistas c = manttoCiclistasFacade.guardarCiclista(current, currentDet);
             initInstance();
+            addMessage("Se creo un ciclista: ", "Id: " + c.getIdCiclista());
         } else {
             getLogger().error("Se requiere que las dos claves coincidan para el registro de ciclistas!!!");
 
