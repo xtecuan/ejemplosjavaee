@@ -205,6 +205,22 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
     }
 
     public void editarCiclista(ActionEvent event) {
+        
+        
+    }
+
+    private void populateDeptosAndMunisForEdit(Ciclistas ciclista) {
+
+        DetCiclistas det = ciclista.getDetCiclistasList().get(0);
+
+        itemsDeptos = ViewUtils.fromListCatDepartamentosToListSelectItem(manttoCiclistasFacade.findDeptosByIdPais(det.getCodpais().getIdPais()));
+        itemsMunis = ViewUtils.fromListCatMunicipiosToListSelectItem(manttoCiclistasFacade.findMunisByCodDepto(det.getCodmuni().getCoddepto().getCoddepto()));
+        setCurrentDepto(det.getCodmuni().getCoddepto());
+        setCurrentMuni(det.getCodmuni());
+        setCurrentPais(det.getCodpais());
+        setCurrentDet(det);
+        setCurrent(ciclista);
+        insert = Boolean.FALSE;
     }
 
     public void prepareEdit(ActionEvent event) {
@@ -213,14 +229,7 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 
         if (selected != null) {
 
-            insert = Boolean.FALSE;
-
-            setCurrent(selected);
-            DetCiclistas temp = selected.getDetCiclistasList().get(0);
-            setCurrentDet(temp);
-            setCurrentDepto(temp.getCodmuni().getCoddepto());
-            setCurrentMuni(temp.getCodmuni());
-            setCurrentPais(temp.getCodpais());
+            populateDeptosAndMunisForEdit(selected);
 
         }
 
