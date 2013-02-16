@@ -402,8 +402,19 @@
 
                     <f:facet name="footer">
 
-                        <p:commandButton id="prepareEdit" actionListener="#{manttoCiclistas.prepareEdit(event)}" value="Editar" update=":form1:panelform,:form1:panelinfoper"/>
+                        <p:panelGrid>
 
+                            <p:row>
+                                <p:column>
+                                    <p:commandButton id="prepareEdit" actionListener="#{manttoCiclistas.prepareEdit(event)}" value="Editar" update=":form1:panelform,:form1:panelinfoper"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandButton id="delete" actionListener="#{manttoCiclistas.delete(event)}" value="Borrar" update=":form1:panelform,:form1:panelinfoper,:form2:tablaCiclistas,:form1:growl"/>
+
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
                     </f:facet>
 
                 </p:dataTable>
