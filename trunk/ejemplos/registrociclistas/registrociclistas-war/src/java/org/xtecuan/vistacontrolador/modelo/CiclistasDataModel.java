@@ -60,8 +60,8 @@ public class CiclistasDataModel extends LazyDataModel<Ciclistas> {
 //        this.setRowCount(service.count());
         //this.setRowIndex(first);
 
-        logger.info("first: " + first);
-        logger.info("pageSize: " + pageSize);
+        logger.debug("first: " + first);
+        logger.debug("pageSize: " + pageSize);
 
 //        int[] rango = {first * pageSize, first * pageSize + pageSize};
         int[] rango = {first, pageSize};

@@ -322,7 +322,7 @@
                             <f:facet name="footer">
                                 <p:row>
                                     <p:column colspan="4">
-                                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+                                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas,:form1:panelinfoper" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
                                     </p:column>
                                 </p:row>
                             </f:facet>
@@ -381,6 +381,18 @@
                         </f:facet>
 
                         <h:outputText value="#{ci.alias}"/>
+
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Nombre Completo:"/>
+
+                        </f:facet>
+
+                        <h:outputText value="#{ci.detCiclistasList[0].nombreCompleto}"/>
 
                     </p:column>
 
