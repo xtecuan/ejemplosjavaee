@@ -322,7 +322,9 @@
                             <f:facet name="footer">
                                 <p:row>
                                     <p:column colspan="4">
-                                        <p:commandButton update=":form1:growl,:form1:panelform,:form2:tablaCiclistas,:form1:panelinfoper" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+                                        <p:commandButton rendered="#{manttoCiclistas.insert}" update=":form1:growl,:form1:panelform,:form2:tablaCiclistas,:form1:panelinfoper" id="bGuardar" value="Guardar" actionListener="#{manttoCiclistas.guardarCiclista(event)}"/>
+
+                                        <p:commandButton rendered="#{not manttoCiclistas.insert}" update=":form1:growl,:form1:panelform,:form2:tablaCiclistas,:form1:panelinfoper" id="bEditar" value="Editar" actionListener="#{manttoCiclistas.editarCiclista(event)}"/>
                                     </p:column>
                                 </p:row>
                             </f:facet>
@@ -345,8 +347,10 @@
 
             <p:panel style="width: 930px" id="paneltable">
 
-                <p:dataTable style="width: 900px" id="tablaCiclistas" rows="5" var="ci" 
-                             value="#{manttoCiclistas.modeloTabla}" paginator="true">
+                <p:dataTable rowKey="#{ci.idCiclista}" style="width: 900px" id="tablaCiclistas" rows="5" var="ci" 
+                             value="#{manttoCiclistas.modeloTabla}" paginator="true" selection="#{manttoCiclistas.selected}">
+
+                    <p:column selectionMode="single"/>
 
                     <p:column>
 
@@ -395,6 +399,12 @@
                         <h:outputText value="#{ci.detCiclistasList[0].nombreCompleto}"/>
 
                     </p:column>
+
+                    <f:facet name="footer">
+
+                        <p:commandButton id="prepareEdit" actionListener="#{manttoCiclistas.prepareEdit(event)}" value="Editar" update=":form1:panelform,:form1:panelinfoper"/>
+
+                    </f:facet>
 
                 </p:dataTable>
 
