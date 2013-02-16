@@ -45,6 +45,8 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
     private List<SelectItem> itemsDeptos;
     private List<SelectItem> itemsMunis;
     private List<SelectItem> itemsSexo;
+    private Boolean insert = Boolean.TRUE;
+    private Ciclistas selected;
 
     /**
      * Creates a new instance of ManttoCiclistas
@@ -82,6 +84,7 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
         currentPais = new CatPaises();
         currentDepto = new CatDepartamentos();
         currentMuni = new CatMunicipios();
+        selected = new Ciclistas();
 
 
 //        current.setDetCiclistas(new DetCiclistas());
@@ -201,6 +204,28 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 
     }
 
+    public void editarCiclista(ActionEvent event) {
+    }
+
+    public void prepareEdit(ActionEvent event) {
+
+        getLogger().info(selected);
+
+        if (selected != null) {
+
+            insert = Boolean.FALSE;
+
+            setCurrent(selected);
+            DetCiclistas temp = selected.getDetCiclistasList().get(0);
+            setCurrentDet(temp);
+            setCurrentDepto(temp.getCodmuni().getCoddepto());
+            setCurrentMuni(temp.getCodmuni());
+            setCurrentPais(temp.getCodpais());
+
+        }
+
+    }
+
     public CiclistasDataModel getModeloTabla() {
         return modeloTabla;
     }
@@ -287,5 +312,21 @@ public class ManttoCiclistas extends XBaseBean implements Serializable {
 
     public void setItemsSexo(List<SelectItem> itemsSexo) {
         this.itemsSexo = itemsSexo;
+    }
+
+    public Boolean getInsert() {
+        return insert;
+    }
+
+    public void setInsert(Boolean insert) {
+        this.insert = insert;
+    }
+
+    public Ciclistas getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Ciclistas selected) {
+        this.selected = selected;
     }
 }

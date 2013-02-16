@@ -35,6 +35,7 @@ public class CiclistasDataModel extends LazyDataModel<Ciclistas> {
 
     @Override
     public Ciclistas getRowData(String rowKey) {
+        logger.info(rowKey);
         return service.find(Integer.valueOf(rowKey));
     }
 
