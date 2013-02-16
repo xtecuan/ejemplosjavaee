@@ -269,6 +269,30 @@ public class DetCiclistas implements Serializable {
         this.sexo = sexo;
     }
 
+    public String getNombreCompleto() {
+
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(primernombre).append(" ");
+
+        if (segundonombre != null && segundonombre.length() > 0) {
+            sb.append(segundonombre).append(" ");
+        }
+
+        sb.append(primerapellido).append(" ");
+
+        if (segundoapellido != null && segundoapellido.length() > 0) {
+            sb.append(segundoapellido).append(" ");
+        }
+
+        if (apellidodecasada != null && apellidodecasada.length() > 0) {
+            sb.append(apellidodecasada);
+        }
+
+        return sb.toString().trim();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -75,7 +75,7 @@ public class ManttoCiclistasFacade {
         return ciclistasFacade;
     }
 
-    public void guardarCiclista(Ciclistas ciclista, DetCiclistas detalle) {
+    public Ciclistas guardarCiclista(Ciclistas ciclista, DetCiclistas detalle) {
 
         try {
 
@@ -90,6 +90,7 @@ public class ManttoCiclistasFacade {
             ciclista.setDetCiclistasList(det);
 
             ciclistasFacade.create(ciclista);
+            getEntityManager().flush();
 
 //            if (ciclista.getIdCiclista() != null) {
 //
@@ -114,6 +115,8 @@ public class ManttoCiclistasFacade {
         } catch (Exception e) {
             logger.error("Error al ejecutar el metodo: guardarCiclista ", e);
         }
+
+        return ciclista;
 
     }
 }
