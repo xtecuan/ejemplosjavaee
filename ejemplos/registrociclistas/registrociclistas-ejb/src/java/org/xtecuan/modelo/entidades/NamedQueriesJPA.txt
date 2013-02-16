@@ -5,7 +5,40 @@ Queries App Ciclistas Urbanos
 @NamedQuery(name = "CatMunicipios.findByCoddepto", query = "SELECT c FROM CatMunicipios c WHERE c.coddepto.coddepto=:coddepto")
 
 
+public String getNombreCompleto() {
 
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(primernombre).append(" ");
+
+        if (segundonombre != null && segundonombre.length() > 0) {
+            sb.append(segundonombre).append(" ");
+        }
+
+        sb.append(primerapellido).append(" ");
+
+        if (segundoapellido != null && segundoapellido.length() > 0) {
+            sb.append(segundoapellido).append(" ");
+        }
+
+        if (apellidodecasada != null && apellidodecasada.length() > 0) {
+            sb.append(apellidodecasada);
+        }
+
+        return sb.toString().trim();
+    }
+
+ @Id
+    @JoinColumn(name = "id_ciclista", referencedColumnName = "id_ciclista", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Ciclistas idCiclista;
+
+
+ @Id
+    @JoinColumn(name = "id_ciclista", referencedColumnName = "id_ciclista", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Ciclistas idCiclista;
 
 ############################################################################################################
 https://en.wikibooks.org/wiki/Java_Persistence/Identity_and_Sequencing
