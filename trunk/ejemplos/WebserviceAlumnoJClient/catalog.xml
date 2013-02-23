@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://192.168.2.47:8080/AlumnosWebService/AlumnosWebService?WSDL" uri="xml-resources/web-service-references/AlumnosWebService/wsdl/192.168.2.47_8080/AlumnosWebService/AlumnosWebService.wsdl"/>
+    <system systemId="http://192.168.2.47:8080/AlumnosWebService/AlumnosWebService?xsd=1" uri="xml-resources/web-service-references/AlumnosWebService/wsdl/192.168.2.47_8080/AlumnosWebService/AlumnosWebService.xsd_1.xsd"/>
+</catalog>
