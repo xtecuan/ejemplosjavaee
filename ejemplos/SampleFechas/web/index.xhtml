@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Ejemplo Seleccion de Fecha con Primefaces</title>
+    </h:head>
+    <h:body>
+        <h:outputText value="Ejemplo Seleccion de Fecha"/>
+        <br />
+        <h:form id="form1">
+            
+            <p:growl id="growl" showDetail="true" showSummary="true" sticky="false"/>
+
+            <p:panelGrid columns="2">
+
+
+                <h:outputLabel value="Seleccione una Fecha" for="fecha"/>
+
+                <p:calendar navigator="true" id="fecha" value="#{fechasBean.fechaSeleccionada}" pattern="dd/MM/yyyy" showButtonPanel="true" yearRange="c-100,c+100"/>
+
+
+                <f:facet name="footer">
+
+                    <p:commandButton id="botonkk" value="Seleccionar" actionListener="#{fechasBean.guardarAlgo(event)}" update=":form1:growl"/>
+
+                </f:facet>
+
+            </p:panelGrid>
+
+
+        </h:form>
+    </h:body>
+</html>
+
