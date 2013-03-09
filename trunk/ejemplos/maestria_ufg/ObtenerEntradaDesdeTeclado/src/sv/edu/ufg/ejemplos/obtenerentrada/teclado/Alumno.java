@@ -120,6 +120,6 @@ public class Alumno {
 
     public void imprimirInfoAlumno() {
 
-        System.out.println(generarTexto());
+        System.out.println(generarTexto() + " \n VERSION MODIFICADA");
     }
 }
