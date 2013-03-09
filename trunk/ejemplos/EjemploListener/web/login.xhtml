@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/template/apptemplate.xhtml">
+
+    <!--ui:define name="top">
+        top
+    </ui:define-->
+
+    <ui:define name="content">
+
+        <h:form id="formLogin">
+
+            <p:growl id="growl" showDetail="true" showSummary="true" sticky="false"/>
+
+            <p:panelGrid columns="2">
+
+                <h:outputLabel value="Usuario" for="usuario"/>
+
+                <p:inputText id="usuario" value="#{loginBean.user.login}" required="true" 
+                             requiredMessage="El usuario es requerido"/>
+
+                <h:outputLabel value="Clave" for="clave"/>
+
+                <p:password id="clave" value="#{loginBean.user.password}" required="true"
+                            requiredMessage="La clave es requerida"/>
+
+                <f:facet name="footer">
+
+                    <p:commandButton id="login" value="Login" action="#{loginBean.doLogin()}" update=":formLogin:growl"/>
+
+                </f:facet>
+
+            </p:panelGrid>
+
+        </h:form>
+
+
+    </ui:define>
+
+    <!--ui:define name="bottom">
+        bott
+    </ui:define-->
+
+</ui:composition>
