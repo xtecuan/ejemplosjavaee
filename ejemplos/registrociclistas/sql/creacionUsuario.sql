@@ -1,1 +1,0 @@
-grant all privileges on regciclistas.* to 'regciclistas'@'localhost' identified by 'welcome1';
