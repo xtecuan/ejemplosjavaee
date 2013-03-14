@@ -12,8 +12,15 @@ import java.util.Date;
  * @author javaee
  */
 public class Alumno {
-    //Variable static
+    //Constants
 
+    private static final String SELECT_ALL_COUNT = "select count(*) from alumnos ";
+    private static final String SELECT_ALL = "select * from alumnos ";
+    private static final String INSERT = "insert into alumnos(carnet,nombres,apellidos,${0}) "
+            + "values(?,?,?,${1})";
+    private static final String DELETE = "delete from alumnos where id=?";
+    private static final String UPDATE_BASE = "UPDATE alumnos SET ${0} WHERE id = ?";
+    //Variable static
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     //Variables de instancia
     private Integer id;
@@ -131,5 +138,41 @@ public class Alumno {
     public void imprimirInfoAlumno() {
 
         System.out.println(generarTexto() + " \n VERSION MODIFICADA");
+    }
+
+    public static String getInsert(StringBuilder cols, StringBuilder marks) {
+
+        if (cols.length() == 0 && marks.length() == 0) {
+
+            return INSERT.replace(",${0}", "").replace(",${1}", "");
+        } else {
+
+            return INSERT.replace("${0}", cols.toString()).replace("${1}", marks.toString());
+        }
+
+    }
+
+    public static String getUpdate(StringBuilder colsAndMarks) {
+
+        if (colsAndMarks.length() == 0) {
+
+            return UPDATE_BASE;
+        } else {
+
+            return UPDATE_BASE.replace("${0}", colsAndMarks.toString());
+        }
+
+    }
+
+    public static String getSELECT_ALL() {
+        return SELECT_ALL;
+    }
+
+    public static String getSELECT_ALL_COUNT() {
+        return SELECT_ALL_COUNT;
+    }
+
+    public static String getDELETE() {
+        return DELETE;
     }
 }
