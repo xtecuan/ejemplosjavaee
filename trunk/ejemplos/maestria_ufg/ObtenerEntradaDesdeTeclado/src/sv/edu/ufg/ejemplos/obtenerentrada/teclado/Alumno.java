@@ -16,6 +16,7 @@ public class Alumno {
 
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     //Variables de instancia
+    private Integer id;
     private String carnet;
     private String nombres;
     private String apellidos;
@@ -79,10 +80,18 @@ public class Alumno {
         this.fechanac = fechanac;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.carnet != null ? this.carnet.hashCode() : 0);
+        hash = 13 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -95,7 +104,7 @@ public class Alumno {
             return false;
         }
         final Alumno other = (Alumno) obj;
-        if ((this.carnet == null) ? (other.carnet != null) : !this.carnet.equals(other.carnet)) {
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -104,6 +113,7 @@ public class Alumno {
     private String generarTexto() {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("\tid: ").append(id).append("\n");
         sb.append("\tcarnet: ").append(carnet).append("\n");
         sb.append("\tnombres:").append(nombres).append("\n");
         sb.append("\tapellidos:").append(apellidos).append("\n");
