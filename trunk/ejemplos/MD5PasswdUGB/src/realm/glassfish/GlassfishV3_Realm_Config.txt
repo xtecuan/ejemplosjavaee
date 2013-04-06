@@ -1,0 +1,19 @@
+Glassfish-3.1.2
+    |
+   \ /
+Configurations
+    |__________>server-config
+                 |____>Security
+                        |___>Realms
+                              |__>sigjur2realm
+                                     |___________> JAAS Context: jdbcRealm
+                                                   JNDI: jdbc/sigju_r2_patcher
+                                                   User Table: v_user_role
+                                                   User Name Column: login
+                                                   Password Column: password
+                                                   Group Table: v_user_role
+                                                   Group Name Column: rol_name
+                                                   Digest Algorithm: MD5
+                                                   Password Encryption Algorithm: MD5
+                                                   Encoding: Hex
+                                                   Charset: UTF-8    
