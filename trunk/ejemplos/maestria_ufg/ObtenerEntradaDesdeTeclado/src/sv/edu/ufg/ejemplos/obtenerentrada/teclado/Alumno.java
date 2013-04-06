@@ -129,10 +129,28 @@ public class Alumno {
         return sb.toString();
     }
 
+    private String generarTextoWeb() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<ul>");
+        sb.append("<li>id: ").append(id).append("</li>");
+        sb.append("<li>carnet: ").append(carnet).append("</li>");
+        sb.append("<li>nombres:").append(nombres).append("</li>");
+        sb.append("<li>apellidos:").append(apellidos).append("</li>");
+        sb.append("<li>correo:").append(correo).append("</li>");
+        sb.append("<li>Fecha Nacimiento:").append(sdf.format(fechanac)).append("</li>");
+        sb.append("</ul>");
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         //return "Alumno{" + "carnet=" + carnet + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo=" + correo + ", fechanac=" + fechanac + '}';
         return generarTexto();
+    }
+
+    public String toWebString() {
+        return generarTextoWeb();
     }
 
     public void imprimirInfoAlumno() {
