@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="http://localhost:8080/Lanzador/cliente/" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>Cliente</title>
+        <vendor>xtecuan</vendor>
+        <homepage href=""/>
+        <description>Cliente</description>
+        <description kind="short">Cliente</description>
+    <icon href="netbeans.png" kind="default"/>
+</information>
+    <update check="always"/>
+    <security>
+<all-permissions/>
+</security>
+    <resources>
+        <j2se version="1.6+"/>
+        <jar href="Cliente.jar" main="true"/>
+    </resources>
+    <application-desc main-class="prueba.NewJFrame">
+    </application-desc>
+</jnlp>
