@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="$$codebase" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>WebServiceUsuariosClient</title>
+        <vendor>xtecuan</vendor>
+        <homepage href=""/>
+        <description>WebServiceUsuariosClient</description>
+        <description kind="short">WebServiceUsuariosClient</description>
+    </information>
+    <update check="always"/>
+    <security>
+<all-permissions/>
+</security>
+    <resources>
+        <j2se version="1.6+"/>
+        <jar href="WebServiceUsuariosClient.jar" main="true"/>
+    </resources>
+    <application-desc main-class="org.xtecuan.ejemplos.aplicacion.usuarios.gui.UsuarioLogin">
+    </application-desc>
+</jnlp>
