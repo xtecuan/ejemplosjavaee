@@ -38,7 +38,7 @@
 
 
         </script>
-
+        <%@include file="/WEB-INF/jspf/estilos.jspf" %>
     </head>
     <body>
         <h1>Ingreso al sistema</h1>
@@ -47,7 +47,7 @@
         <p style="color: red">
 
 
-        <ul>
+        <ul style="color: red">
             <c:if test="${not empty errores}">
 
                 <c:forEach items="${errores}" var="error">
