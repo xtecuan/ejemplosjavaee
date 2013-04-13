@@ -4,6 +4,7 @@
     Author     : xtecuan
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,9 +16,55 @@
     </head>
     <body>
         <h1>Creación Alumno</h1>
-        
-        
-        
-        
+
+        <%@include  file="/WEB-INF/jspf/mensajes.jspf" %>
+
+        <%@include  file="/WEB-INF/jspf/errores.jspf" %>
+
+
+        <form name="form1" action="${pageContext.servletContext.contextPath}/dml.ufg" method="POST" onsubmit="return validarFormularioCreate('form1', 'carnet,nombres,apellidos');">
+
+            <input type="hidden" name="action" value="create" />
+            <input type="hidden" name="errorPage" value="/app/alumnosCrear.jsp" />
+            <input type="hidden" name="viewPage" value="/app/alumnosCrear.jsp" />
+
+            <table border="1">
+
+                <tbody>
+                    <!--tr>
+                        <td>Id:</td>
+                        <td></td>
+                    </tr-->
+                    <tr>
+                        <td>Carnet</td>
+                        <td><input type="text" name="carnet" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Nombres</td>
+                        <td><input type="text" name="nombres" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Apellidos</td>
+                        <td><input type="text" name="apellidos" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Correo</td>
+                        <td><input type="text" name="correo" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha Nacimiento (dd/MM/yyyy)</td>
+                        <td><input type="text" name="fechanac" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="reset" value="Limpiar" /></td>
+                        <td><input type="submit" value="Enviar" /></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </form>
+
+
     </body>
 </html>

@@ -46,45 +46,33 @@
 
         <p style="color: red">
 
+            <%@include  file="/WEB-INF/jspf/errores.jspf" %>
 
-        <ul style="color: red">
-            <c:if test="${not empty errores}">
-
-                <c:forEach items="${errores}" var="error">
-
-                    <li>${error}</li>
-
-                </c:forEach>
-
-                <c:remove scope="session" var="errores"/>
-
-            </c:if>
-        </ul>
-    </p>
+        </p>
 
 
-    <form name="form1" action="${pageContext.servletContext.contextPath}/login.ufg" method="POST" onsubmit="return validarLogin('form1');">
+        <form name="form1" action="${pageContext.servletContext.contextPath}/login.ufg" method="POST" onsubmit="return validarLogin('form1');">
 
-        <table border="1" cellspacing="1" cellpadding="1">
+            <table border="1" cellspacing="1" cellpadding="1">
 
-            <tbody>
-                <tr>
-                    <td>Usuario:</td>
-                    <td><input type="text" name="login" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Clave:</td>
-                    <td><input type="password" name="password" value="" /></td>
-                </tr>
-                <tr>
-                    <td><input type="reset" value="Limpiar" /></td>
-                    <td><input type="submit" value="Entrar" /></td>
-                </tr>
-            </tbody>
-        </table>
+                <tbody>
+                    <tr>
+                        <td>Usuario:</td>
+                        <td><input type="text" name="login" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Clave:</td>
+                        <td><input type="password" name="password" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="reset" value="Limpiar" /></td>
+                        <td><input type="submit" value="Entrar" /></td>
+                    </tr>
+                </tbody>
+            </table>
 
 
-    </form>
+        </form>
 
-</body>
+    </body>
 </html>

@@ -22,3 +22,39 @@ function enableTextSearch(form, combo) {
         document.forms[form].elements[whatValue].disabled = false;
     }
 }
+
+
+function validarFormularioCreate(form, camposOblig) {
+
+    var campos = camposOblig.split(',');
+
+    var res = true;
+
+    for (var i = 0; i < campos.length; i++) {
+
+        var value = document.forms[form].elements[campos[i]].value;
+
+        if (value !== null && value !== '') {
+
+            if (campos[i] == 'carnet') {
+
+                if (value.length == 10) {
+                    res = res && true;
+                } else {
+                    res = false;
+                    alert('El carnet debe tener 10 caracteres de longitud');
+                }
+            } else {
+
+                res = res && true;
+            }
+        } else {
+            res = false;
+            alert('El campo: ' + campos[i] + ' es requerido!!!');
+        }
+
+
+    }
+
+    return res;
+}
