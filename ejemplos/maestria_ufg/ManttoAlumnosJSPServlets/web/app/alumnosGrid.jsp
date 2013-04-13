@@ -21,7 +21,7 @@
         <br>
         <br>
 
-        <c:if test="${not empty respuesta}">
+        <c:if test="${not empty respuestaGrid}">
             <%@include  file="grid.jsp" %>
         </c:if>
 

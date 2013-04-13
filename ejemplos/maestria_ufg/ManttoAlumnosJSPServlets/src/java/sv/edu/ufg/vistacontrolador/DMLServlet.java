@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import sv.edu.ufg.modelo.dto.AlumnoDTO;
+import sv.edu.ufg.modelo.facade.AlumnosFacade;
 
 /**
  *
@@ -108,15 +109,23 @@ public class DMLServlet extends HttpServlet {
             }
 
             if (action.equals(ACTION_NEW)) {
-                respuesta = createAlumno(params);
+                respuesta = AlumnosFacade.createAlumno(params, dataSource);
+                List<AlumnoDTO> respuestaGrid = AlumnosFacade.findAll(dataSource);
+                session.setAttribute("respuestaGrid", respuestaGrid);
             }
 
             if (action.equals(ACTION_EDIT) && idVal) {
-                respuesta = editAlumno(respuesta);
+                respuesta = AlumnosFacade.editAlumno(params, dataSource);
+                List<AlumnoDTO> respuestaGrid = AlumnosFacade.findAll(dataSource);
+                session.setAttribute("respuestaGrid", respuestaGrid);
             }
 
             if (action.equals(ACTION_REMOVE) && idVal) {
-                respuesta = removeAlumno(id);
+                respuesta = AlumnosFacade.removeAlumno(params, dataSource);
+
+                List<AlumnoDTO> respuestaGrid = AlumnosFacade.findAll(dataSource);
+                session.setAttribute("respuestaGrid", respuestaGrid);
+
             }
 
             if (respuesta == null) {
@@ -140,127 +149,6 @@ public class DMLServlet extends HttpServlet {
 
         response.sendRedirect(url);
 
-    }
-
-    private AlumnoDTO fromMapToObject(Map<String, Object> params) {
-
-        AlumnoDTO dto = new AlumnoDTO();
-
-        for (String key : params.keySet()) {
-
-            if (key.equals("id")) {
-                dto.setId((Integer) params.get(key));
-            }
-
-            if (key.equals("carnet")) {
-                dto.setCarnet((String) params.get(key));
-            }
-
-            if (key.equals("nombres")) {
-                dto.setNombres((String) params.get(key));
-            }
-
-            if (key.equals("apellidos")) {
-                dto.setApellidos((String) params.get(key));
-            }
-
-            if (key.equals("correo")) {
-                dto.setCorreo((String) params.get(key));
-            }
-
-            if (key.equals("fechanac")) {
-                Date fechanac = (Date) params.get(key);
-                dto.setFechanac(fechanac);
-            }
-        }
-
-        return dto;
-    }
-
-    private void setPreparedStatementParameters(Map<String, Object> params, PreparedStatement psta) throws SQLException {
-
-        int i = 1;
-        for (String key : params.keySet()) {
-
-            Object param = params.get(key);
-
-            if (param instanceof Integer) {
-
-                psta.setInt(i, (Integer) param);
-            }
-
-            if (param instanceof String) {
-                psta.setString(i, (String) param);
-            }
-
-            if (param instanceof java.util.Date) {
-                Date fecha = (Date) param;
-                psta.setDate(i, new java.sql.Date(fecha.getTime()));
-            }
-
-            if (param instanceof Long) {
-                psta.setLong(i, (Long) param);
-            }
-
-            i++;
-        }
-    }
-
-    private AlumnoDTO createAlumno(Map<String, Object> params) {
-        AlumnoDTO r = null;
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-            String sql = AlumnoDTO.getInsert(params);
-            PreparedStatement psta = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            setPreparedStatementParameters(params, psta);
-            System.out.println("Ejecutando query: " + sql);
-            int rrr = psta.executeUpdate();
-            if (rrr == 1) {
-                ResultSet rset = psta.getGeneratedKeys();
-
-                while (rset.next()) {
-
-                    r = fromMapToObject(params);
-                    int id = rset.getInt(1);
-
-                    r.setId(id);
-                }
-
-                rset.close();
-            } else {
-
-                System.err.println("No se ingreso ningun registro debido a un problema de persistencia!!!");
-            }
-
-            psta.close();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return r;
-    }
-
-    private AlumnoDTO editAlumno(AlumnoDTO dto) {
-        AlumnoDTO r = null;
-
-        return r;
-    }
-
-    private AlumnoDTO removeAlumno(String id) {
-        AlumnoDTO r = null;
-
-        return r;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

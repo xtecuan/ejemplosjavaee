@@ -206,6 +206,21 @@ public class AlumnoDTO {
         return SELECT_BY_NAME;
     }
 
+    public static String[] getNamesForUpdate(Map<String, Object> params) {
+        String[] names = new String[params.keySet().size() - 1];
+        int i = 0;
+        for (String key : params.keySet()) {
+
+            if (!key.endsWith("id")) {
+
+                names[i] = key;
+                i++;
+            }
+        }
+
+        return names;
+    }
+
     public static String getInsert(Map<String, Object> params) {
         StringBuilder cols = new StringBuilder("insert into alumnos(");
         StringBuilder vals = new StringBuilder("values(");
@@ -230,6 +245,38 @@ public class AlumnoDTO {
         }
 
         cols.append(" ").append(vals);
+
+        return cols.toString();
+    }
+
+    public static String getUpdate(Map<String, Object> params) {
+        StringBuilder cols = new StringBuilder("UPDATE alumnos SET ");
+        String whereClause = "WHERE id = ?";
+
+        String[] names = new String[params.keySet().size() - 1];
+
+
+        int i = 0;
+        for (String key : params.keySet()) {
+
+            if (!key.endsWith("id")) {
+
+                names[i] = key;
+                i++;
+            }
+        }
+
+        for (int j = 0; j < names.length; j++) {
+            if (j == names.length - 1) {
+                cols.append(names[j]).append("=").append("?");
+
+            } else {
+                cols.append(names[j]).append("=").append("?,");
+
+            }
+        }
+
+        cols.append(" ").append(whereClause);
 
         return cols.toString();
     }
