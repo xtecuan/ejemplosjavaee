@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import sv.edu.ufg.modelo.dto.AlumnoDTO;
+import sv.edu.ufg.modelo.facade.AlumnosFacade;
 
 /**
  *
@@ -29,7 +30,7 @@ public class FinderServlet extends HttpServlet {
     private static final String ID = "id";
     private static final String ALL = "all";
     private static final String NOMBRES = "nombres";
-    private static final String RESPUESTA = "respuesta";
+    private static final String RESPUESTA = "respuestaGrid";
     private static final String ERRORES = "errores";
     @Resource(name = "dataSource")
     private DataSource dataSource;
@@ -64,16 +65,16 @@ public class FinderServlet extends HttpServlet {
         if (findVal) {
 
             if (find.equals(ALL)) {
-                respuesta = findAll();
+                respuesta = AlumnosFacade.findAll(dataSource);
             }
 
             if (find.equals(ID) && idVal) {
-                dto = findById(id);
+                dto = AlumnosFacade.findById(id, dataSource);
                 respuesta.add(dto);
             }
 
             if (find.equals(NOMBRES) && nombresVal) {
-                respuesta = findLikeNames(nombres);
+                respuesta = AlumnosFacade.findLikeNames(nombres, dataSource);
             }
 
             if (respuesta.isEmpty()) {
@@ -97,188 +98,6 @@ public class FinderServlet extends HttpServlet {
 
         response.sendRedirect(url);
 
-    }
-
-    private List<AlumnoDTO> findLikeNames(String nombres) {
-
-        List<AlumnoDTO> respuesta = new ArrayList<AlumnoDTO>(0);
-
-        Connection conn = null;
-
-        try {
-            conn = dataSource.getConnection();
-
-            PreparedStatement psta = conn.prepareStatement(AlumnoDTO.getSELECT_BY_NAME());
-            psta.setString(1, nombres);
-
-
-            ResultSet rset = psta.executeQuery();
-
-            while (rset.next()) {
-
-                AlumnoDTO dto = new AlumnoDTO();
-
-                dto.setId(rset.getInt("id"));
-                dto.setCarnet(rset.getString("carnet"));
-                dto.setNombres(rset.getString("nombres"));
-                dto.setApellidos(rset.getString("apellidos"));
-
-                String correo = rset.getString("correo");
-
-                if (correo != null && correo.length() > 0) {
-                    dto.setCorreo(correo);
-                }
-
-                java.sql.Date fechaNac = rset.getDate("fechanac");
-
-                if (fechaNac != null) {
-                    dto.setFechanac(new Date(fechaNac.getTime()));
-                }
-
-                respuesta.add(dto);
-
-            }
-
-            rset.close();
-            psta.close();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return respuesta;
-    }
-
-    private AlumnoDTO findById(String id) {
-
-        AlumnoDTO respuesta = null;
-
-        Connection conn = null;
-
-        try {
-            conn = dataSource.getConnection();
-
-            PreparedStatement psta = conn.prepareStatement(AlumnoDTO.getSELECT_BY_ID());
-            psta.setInt(1, Integer.valueOf(id));
-
-
-            ResultSet rset = psta.executeQuery();
-
-            while (rset.next()) {
-
-                respuesta = new AlumnoDTO();
-
-                respuesta.setId(rset.getInt("id"));
-                respuesta.setCarnet(rset.getString("carnet"));
-                respuesta.setNombres(rset.getString("nombres"));
-                respuesta.setApellidos(rset.getString("apellidos"));
-
-                String correo = rset.getString("correo");
-
-                if (correo != null && correo.length() > 0) {
-                    respuesta.setCorreo(correo);
-                }
-
-                java.sql.Date fechaNac = rset.getDate("fechanac");
-
-                if (fechaNac != null) {
-                    respuesta.setFechanac(new Date(fechaNac.getTime()));
-                }
-
-
-
-            }
-
-            rset.close();
-            psta.close();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return respuesta;
-    }
-
-    private List<AlumnoDTO> findAll() {
-
-        List<AlumnoDTO> respuesta = new ArrayList<AlumnoDTO>(0);
-
-        Connection conn = null;
-
-        try {
-            conn = dataSource.getConnection();
-
-            PreparedStatement psta = conn.prepareStatement(AlumnoDTO.getSELECT_ALL());
-
-
-            ResultSet rset = psta.executeQuery();
-
-            while (rset.next()) {
-
-                AlumnoDTO dto = new AlumnoDTO();
-
-                dto.setId(rset.getInt("id"));
-                dto.setCarnet(rset.getString("carnet"));
-                dto.setNombres(rset.getString("nombres"));
-                dto.setApellidos(rset.getString("apellidos"));
-
-                String correo = rset.getString("correo");
-
-                if (correo != null && correo.length() > 0) {
-                    dto.setCorreo(correo);
-                }
-
-                java.sql.Date fechaNac = rset.getDate("fechanac");
-
-                if (fechaNac != null) {
-                    dto.setFechanac(new Date(fechaNac.getTime()));
-                }
-
-                respuesta.add(dto);
-
-            }
-
-            rset.close();
-            psta.close();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

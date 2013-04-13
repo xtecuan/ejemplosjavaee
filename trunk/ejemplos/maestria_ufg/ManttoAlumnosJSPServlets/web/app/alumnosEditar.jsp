@@ -24,9 +24,10 @@
 
         <form name="form1" action="${pageContext.servletContext.contextPath}/dml.ufg" method="POST" onsubmit="return validarFormularioCreate('form1', 'carnet,nombres,apellidos');">
 
-            <input type="hidden" name="action" value="create" />
-            <input type="hidden" name="errorPage" value="/app/alumnosCrear.jsp" />
+            <input type="hidden" name="action" value="edit" />
+            <input type="hidden" name="errorPage" value="/app/alumnosEditar.jsp" />
             <input type="hidden" name="viewPage" value="/app/alumnosGrid.jsp" />
+            <input type="hidden" name="id" value="${param.id}" />
 
             <table border="1">
 
@@ -37,23 +38,23 @@
                     </tr-->
                     <tr>
                         <td>Carnet</td>
-                        <td><input type="text" name="carnet" value="" /></td>
+                        <td><input type="text" name="carnet" value="${param.carnet}" /></td>
                     </tr>
                     <tr>
                         <td>Nombres</td>
-                        <td><input type="text" name="nombres" value="" /></td>
+                        <td><input type="text" name="nombres" value="${param.nombres}" /></td>
                     </tr>
                     <tr>
                         <td>Apellidos</td>
-                        <td><input type="text" name="apellidos" value="" /></td>
+                        <td><input type="text" name="apellidos" value="${param.apellidos}" /></td>
                     </tr>
                     <tr>
                         <td>Correo</td>
-                        <td><input type="text" name="correo" value="" /></td>
+                        <td><input type="text" name="correo" value="${param.correo}" /></td>
                     </tr>
                     <tr>
                         <td>Fecha Nacimiento (dd/MM/yyyy)</td>
-                        <td><input type="text" name="fechanac" value="" /></td>
+                        <td><input type="text" name="fechanac" value="${param.fechanac}" /></td>
                     </tr>
                     <tr>
                         <td><input type="reset" value="Limpiar" /></td>
