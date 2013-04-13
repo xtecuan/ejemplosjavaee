@@ -10,9 +10,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Creación Alumno</title>
+        <%@include file="/WEB-INF/jspf/functions.jspf" %>
         <%@include file="/WEB-INF/jspf/estilos.jspf" %>
     </head>
     <body>
         <h1>Creación Alumno</h1>
+        
+        
+        
+        
     </body>
 </html>
