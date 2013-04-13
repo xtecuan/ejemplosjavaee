@@ -224,7 +224,7 @@ public class AlumnoDTO {
                 cols.append(names[j]).append(")");
                 vals.append("?").append(")");
             } else {
-                cols.append(names[i]).append(",");
+                cols.append(names[j]).append(",");
                 vals.append("?").append(",");
             }
         }
