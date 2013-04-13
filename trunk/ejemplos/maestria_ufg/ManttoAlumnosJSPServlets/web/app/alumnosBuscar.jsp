@@ -13,8 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Busqueda de alumnos</title>
 
-        <script src="${pageContext.servletContext.contextPath}/js/functions.js">
-        </script>
+        <%@include file="/WEB-INF/jspf/functions.jspf" %>
         <%@include file="/WEB-INF/jspf/estilos.jspf" %>
     </head>
     <body>

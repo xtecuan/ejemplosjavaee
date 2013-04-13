@@ -6,6 +6,8 @@ package sv.edu.ufg.modelo.dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -203,6 +205,32 @@ public class AlumnoDTO {
     public static String getSELECT_BY_NAME() {
         return SELECT_BY_NAME;
     }
-    
-    
+
+    public static String getInsert(Map<String, Object> params) {
+        StringBuilder cols = new StringBuilder("insert into alumnos(");
+        StringBuilder vals = new StringBuilder("values(");
+
+        String[] names = new String[params.keySet().size()];
+
+
+        int i = 0;
+        for (String key : params.keySet()) {
+            names[i] = key;
+            i++;
+        }
+
+        for (int j = 0; j < names.length; j++) {
+            if (j == names.length - 1) {
+                cols.append(names[j]).append(")");
+                vals.append("?").append(")");
+            } else {
+                cols.append(names[i]).append(",");
+                vals.append("?").append(",");
+            }
+        }
+
+        cols.append(" ").append(vals);
+
+        return cols.toString();
+    }
 }

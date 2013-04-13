@@ -99,7 +99,7 @@ public class FinderServlet extends HttpServlet {
 
     }
 
-    public List<AlumnoDTO> findLikeNames(String nombres) {
+    private List<AlumnoDTO> findLikeNames(String nombres) {
 
         List<AlumnoDTO> respuesta = new ArrayList<AlumnoDTO>(0);
 
@@ -160,7 +160,7 @@ public class FinderServlet extends HttpServlet {
         return respuesta;
     }
 
-    public AlumnoDTO findById(String id) {
+    private AlumnoDTO findById(String id) {
 
         AlumnoDTO respuesta = null;
 
@@ -221,7 +221,7 @@ public class FinderServlet extends HttpServlet {
         return respuesta;
     }
 
-    public List<AlumnoDTO> findAll() {
+    private List<AlumnoDTO> findAll() {
 
         List<AlumnoDTO> respuesta = new ArrayList<AlumnoDTO>(0);
 
