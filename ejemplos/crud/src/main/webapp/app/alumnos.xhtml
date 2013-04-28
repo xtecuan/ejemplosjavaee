@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="titulo">
+        <h:outputText value="#{bundle.alumnos_titulo}"/>
+    </ui:define>
+
+    <ui:define name="parteArriba">
+        <h1><h:outputText value="#{bundle.alumnos_header}"/></h1>
+    </ui:define>
+
+    <ui:define name="formulario">
+        
+        <h:form id="form1">
+            
+            <p:dataTable rowKey="#{alumno.id}" id="table" paginator="true" rows="5" lazy="true" value="#{alumnos.model}" var="alumno">
+            
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.alumnos_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.id}"/>
+                </p:column>
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.alumnos_nombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.nombres}"/>
+                </p:column>
+                   <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.alumnos_apellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{alumno.apellidos}"/>
+                </p:column>
+                
+            </p:dataTable>
+            
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>
