@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+        <title><h:outputText value="#{bundle.index_title}"/></title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form1">
+            
+            <p:growl id="growl" showDetail="true" sticky="false"/>
+            
+            <p:panel header="#{bundle.index_panel_header}">
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="pcorreo" value="#{bundle.index_pcorreo_label}"/>
+                    <p:inputText id="pcorreo" value="#{reporteAlumnosXCorreoBean.pcorreo}"/>
+                    
+                    <f:facet name="footer">
+                        
+                        <h:commandLink id="descargaPdf" 
+                                       actionListener="#{reporteAlumnosXCorreoBean.generarReporte}"
+                                        value="#{bundle.index_genreporte}"/>
+                        
+                    </f:facet>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</html>
+
