@@ -52,5 +52,7 @@
     
     
     <bean id="reporteAlumnosXCorreoBean" class="org.xtecuan.ejemplos.jasperreports.clientejasperreports.ReporteAlumnosXCorreoBean" scope="view"/>
+    <bean id="reporteAlumnosXFechanacBean" class="org.xtecuan.ejemplos.jasperreports.clientejasperreports.ReporteAlumnosXFechanacBean" 
+          scope="view"/>
     
 </beans>
