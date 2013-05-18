@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+        <title><h:outputText value="#{bundle.reporte_x_fechanac_title}"/></title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form1">
+            
+            <p:growl id="growl" showDetail="true" sticky="false"/>
+            
+            <p:panel header="#{bundle.reporte_x_fechanac_panel_header}">
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="pfechanac" value="#{bundle.reporte_x_fechanac_pfechanac_label}"/>
+                    <p:inputText id="pfechanac" value="#{reporteAlumnosXFechanacBean.pfechanac}"/>
+                    
+                    <f:facet name="footer">
+                        
+                        <h:commandLink id="descargaPdf" 
+                                       actionListener="#{reporteAlumnosXFechanacBean.generarReporte}"
+                                       value="#{bundle.reporte_x_fechanac_genreporte}"/>
+                        
+                    </f:facet>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</html>
+
