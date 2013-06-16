@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+
+            <script type="text/javascript">
+                function start() {
+
+                    statusDialog.show();
+                }
+
+                function stop() {
+                    statusDialog.hide();
+                }
+            </script>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces Download Sample</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+            </p:dialog>
+
+            <h:form id="form">
+
+                <p:panel header="Download sun.jpg file">
+
+                    <p:commandButton id="downloadLink" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" 
+                                     icon="ui-icon-arrowthichk-s">
+                        <p:fileDownload value="#{DownloadBean.file}" />
+                    </p:commandButton>
+                </p:panel>
+            </h:form>
+
+        </h:body>
+
+    </f:view>
+</html>
+
+
+
