@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./templates/appTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        <h:outputText value="#{bundle.index_title}"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1">
+            
+            <p:growl id="growl" showDetail="true" sticky="false"/>
+            
+            <p:panel header="#{bundle.index_panel_header}">
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="pcorreo" value="#{bundle.index_pcorreo_label}"/>
+                    <p:inputText id="pcorreo" value="#{reporteAlumnosXCorreoBean.pcorreo}"/>
+                    
+                    <f:facet name="footer">
+                        
+                        <h:commandLink id="descargaPdf" 
+                                       actionListener="#{reporteAlumnosXCorreoBean.generarReporte}"
+                                        value="#{bundle.index_genreporte}"/>
+                        
+                    </f:facet>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+
