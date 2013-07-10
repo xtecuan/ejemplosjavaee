@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">
+                <h:outputText value="#{bundle.principal_title}"/>
+            </ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <table cellspacing="10px">
+            <tr>
+                <td id="top">
+                    <ui:insert name="top">
+                        <h:form id="menu">
+                            <p:menubar>  
+                                <p:submenu label="#{bundle.principal_reportes}" icon="ui-icon-document">  
+
+                                    <p:menuitem value="#{bundle.principal_reporte_x_correo}">
+                                        <a href="#{request.contextPath}/reporte_x_correo.jsf">
+
+                                            <h:outputText value="#{bundle.principal_reporte_x_correo}"/>
+                                        </a>
+                                    </p:menuitem>
+                                    <p:separator />  
+                                    <p:menuitem value="#{bundle.principal_reporte_x_fechanac}">
+                                        <a href="#{request.contextPath}/reporte_x_fechanac.jsf">
+
+                                            <h:outputText value="#{bundle.principal_reporte_x_fechanac}"/>
+                                        </a>
+                                    </p:menuitem> 
+                                </p:submenu> 
+                            </p:menubar>
+                        </h:form>
+                    </ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td id="content">
+                    <ui:insert name="content">Content</ui:insert>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+
+</html>
